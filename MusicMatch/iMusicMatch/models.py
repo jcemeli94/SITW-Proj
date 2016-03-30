@@ -20,5 +20,6 @@ class Playlist(models.Playlist):
 
 class Track(models.Playlist):
     scID = models.IntegerField()
+    duration = models.IntegerField() #Time in seconds
     ownUsers = models.ManytoManyField(User)
     isInPlaylist = models.ManytoManyField(Playlist)
