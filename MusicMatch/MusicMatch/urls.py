@@ -20,5 +20,5 @@ from iMusicMatch import views
 urlpatterns = [
     url(r'^$', mainpage),
     url(r'^admin/', include(admin.site.urls)),
-    #url(r'^post/new/$', views.new_restaurant, name='new_restaurant'),
+    url(r'^get/playlist/$', views.ListingHTMLPlaylists, name='get_playlist'),
 ]

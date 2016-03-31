@@ -11,6 +11,10 @@ def mainpage(request):
     return render(request, 'iMusicMatch/mainPage.html')
 #, {'rests':rests})
 
+def ListingHTMLPlaylists(request):
+    playl = Playlist.objects.filter(name__isnull=False)
+    return render(request, 'iMusicMatch/ListingHTMLPlaylist.html', {'playl' : playl})
+
 #
 # def new_restaurant(request):
 #         if request.method == "POST":
