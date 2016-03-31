@@ -48,7 +48,7 @@ class PlaylistReview(models.Model):
     review = models.CharField(max_length = 1000)
 
     def __unicode__(self):
-        return "{0}, {1}, {3]".format(self.scID, self.username, self.date)
+        return "{0}, {1}".format(self.scID, self.username)
 
 class GroupReview(models.Model):
     scID = models.IntegerField() #Group ID in SoundCloud
@@ -57,4 +57,4 @@ class GroupReview(models.Model):
     review = models.CharField(max_length = 1000)
 
     def __unicode__(self):
-        return "{0}, {1}, {3]".format(self.scID, self.username, self.date)
+        return "{0}, {1}".format(self.scID, self.username)
