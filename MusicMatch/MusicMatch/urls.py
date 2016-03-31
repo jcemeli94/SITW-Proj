@@ -25,5 +25,6 @@ urlpatterns = [
     url(r'^get/track/$', views.ListingHTMLTracks, name='get_track'),
     url(r'^get/user/$', views.ListingHTMLUsers, name='get_user'),
     url(r'^get/playlistreview/$', views.ListingHTMLPlaylistReviews, name='get_playlistreview'),
-    url(r'^get/groupreview/$', views.ListingHTMLGroupReviews, name='get_groupreview')
+    url(r'^get/groupreview/$', views.ListingHTMLGroupReviews, name='get_groupreview'),
+    url(r'^get/group/(?P<objID>[0-9]+)', views.ShowSpecificGroup, name='get_spec_group')
 ]

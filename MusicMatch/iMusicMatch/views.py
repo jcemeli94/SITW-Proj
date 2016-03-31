@@ -45,3 +45,7 @@ def ListingHTMLPlaylistReviews(request):
 def ListingHTMLGroupReviews(request):
     rvs = GroupReview.objects.filter(scID__isnull=False)
     return render(request, 'iMusicMatch/ListingHTMLGroupReview.html', {'rvs': rvs})
+
+def ShowSpecificGroup(request, objID):
+    gps = Group.objects.filter(scID__exact=int(objID))
+    return render(request, 'iMusicMatch/ListingHTMLGroup.html', {'gps':gps})
