@@ -3,44 +3,45 @@ from django.db import models
 #Group, users, playlists, tracks
 
 from django.contrib.auth.models import User
+from django.contrib.auth.models import *
 
-class Group(models.Group):
+class Group(models.Model):
     scID = models.IntegerField() #ID used in SoundCloud API
-    name = models.CharField()
-    userList = models.ManytoManyField(User)
+    name = models.CharField(max_length=100)
+    userList = models.ManyToManyField(User)
 
     def __unicode__(self):
         return self.scID+" - "+self.name
 
-class User(models.User):
+class Track(models.Model):
     scID = models.IntegerField()
-    name = models.CharField()
-    userPlaylists = models.ManytoManyField(Playlist)
-    userTracks = models.ManytoManyField(Track)
-
-    def __unicode__(self):
-        return self.scID+" - "+self.name
-
-class Playlist(models.Playlist):
-    scID = models.IntegerField()
-    name = models.CharField()
-    ownUsers = models.ManytoManyField(User)
-    trackList = models.ManytoManyField(Track)
-
-    def __unicode__(self):
-        return self.scID+" - "+self.name
-
-class Track(models.Playlist):
-    scID = models.IntegerField()
-    name = models.CharField()
+    name = models.CharField(max_length=100)
     duration = models.IntegerField() #Time in seconds
-    ownUsers = models.ManytoManyField(User)
-    isInPlaylist = models.ManytoManyField(Playlist)
+    ownUsers = models.ManyToManyField(User)
+    #isInPlaylist = models.ManyToManyField(Playlist)
 
     def __unicode__(self):
         return self.scID+" - "+self.name
 
-class PlaylistReview(model.PlaylistReview):
+class Playlist(models.Model):
+    scID = models.IntegerField()
+    name = models.CharField(max_length=100)
+    ownUsers = models.ManyToManyField(User)
+    trackList = models.ManyToManyField(Track)
+
+    def __unicode__(self):
+        return self.scID + " - " + self.name
+
+class User(models.Model):
+    scID = models.IntegerField()
+    name = models.CharField(max_length=100)
+    userPlaylists = models.ManyToManyField(Playlist)
+    userTracks = models.ManyToManyField(Track)
+
+    def __unicode__(self):
+        return self.scID+" - "+self.name
+
+class PlaylistReview(models.Model):
     scID = models.IntegerField() #Playlist ID in SoundCloud
     username = models.CharField(max_length = 20)
     date = models.DateField()
@@ -49,7 +50,7 @@ class PlaylistReview(model.PlaylistReview):
     def __unicode__(self):
         return self.scID+" - "+self.username+" - "+self.date
 
-class GroupReview(model.PlaylistReview):
+class GroupReview(models.Model):
     scID = models.IntegerField() #Group ID in SoundCloud
     username = models.CharField(max_length = 20)
     date = models.DateField()
