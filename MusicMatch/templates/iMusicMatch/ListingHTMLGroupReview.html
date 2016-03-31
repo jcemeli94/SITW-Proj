@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+ <html>
+        <head>
+            <title>Group Review list</title>
+        </head>
+        <body>
+             <div>
+                <h1><p>Group Review list</p></h1>
+                 <br> </br>
+            </div>
+
+        {% for rv in rvs %}
+         <!--{{ rv }}-->
+
+            <br> </br>
+                <p>SoundCoud ID: <b>{{ rv.scID }}</b></p>
+                <p>Author name: <b>{{ rv.username }}</b></p>
+                <p>Date: <b>{{ rv.date }}</b></p>
+                <p>Review: <b>{{ rv.review }}</b></p>
+
+        {% endfor %}
+        </body>
+
+    </html>

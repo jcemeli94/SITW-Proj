@@ -1,0 +1,28 @@
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+ <html>
+        <head>
+            <title>Group list</title>
+        </head>
+        <body>
+             <div>
+                <h1><p>Group list</p></h1>
+                 <br> </br>
+            </div>
+
+        {% for gp in gps %}
+         <!--{{ gp }}-->
+
+            <br> </br>
+                <p>SoundCoud ID: <b>{{ gp.scID }}</b></p>
+                <p>Name: <b>{{ gp.name }}</b></p>
+                <p>Users: {%  for user in gp.userList.all %}
+                    <li>{{ user }}
+                    {% endfor %}</li></p>
+{#                <p>Track List: <b>{{ pl.trackList }}</b></p>#}
+
+        {% endfor %}
+        </body>
+
+    </html>

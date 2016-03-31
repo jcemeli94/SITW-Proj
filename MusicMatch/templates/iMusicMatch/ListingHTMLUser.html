@@ -1,0 +1,33 @@
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+ <html>
+        <head>
+            <title>User list</title>
+        </head>
+        <body>
+             <div>
+                <h1><p>User list</p></h1>
+                 <br> </br>
+            </div>
+
+        {% for usr in usrs %}
+         <!--{{ pl }}-->
+
+            <div>
+            <br> </br>
+                <p>SoundCoud ID: <b>{{ usr.scID }}</b></p>
+                <p>Name: <b>{{ usr.name }}</b></p>
+                <p>Playlists: {%  for playlist in usr.userPlaylists.all %}
+                    <li>{{ playlist }}
+                    {% endfor %}</li></p>
+                <p>Tracks: {%  for track in usr.userTracks.all %}
+                    <li>{{ track }}
+                    {% endfor %}</li></p>
+
+            </div>
+
+        {% endfor %}
+        </body>
+
+    </html>

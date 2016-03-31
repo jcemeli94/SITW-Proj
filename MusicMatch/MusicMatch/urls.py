@@ -20,5 +20,10 @@ from iMusicMatch import views
 urlpatterns = [
     url(r'^$', mainpage),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^get/group/$', views.ListingHTMLGroups, name='get_group'),
     url(r'^get/playlist/$', views.ListingHTMLPlaylists, name='get_playlist'),
+    url(r'^get/track/$', views.ListingHTMLTracks, name='get_track'),
+    url(r'^get/user/$', views.ListingHTMLUsers, name='get_user'),
+    url(r'^get/playlistreview/$', views.ListingHTMLPlaylistReviews, name='get_playlistreview'),
+    url(r'^get/groupreview/$', views.ListingHTMLGroupReviews, name='get_groupreview')
 ]

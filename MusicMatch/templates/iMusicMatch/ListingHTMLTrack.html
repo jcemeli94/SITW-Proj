@@ -1,0 +1,28 @@
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+ <html>
+        <head>
+            <title>Track list</title>
+        </head>
+        <body>
+             <div>
+                <h1><p>Track list</p></h1>
+                 <br> </br>
+            </div>
+
+        {% for tr in trs %}
+         <!--{{ pl }}-->
+
+            <div>
+            <br> </br>
+                <p>SoundCoud ID: <b>{{ tr.scID }}</b></p>
+                <p>Name: <b>{{ tr.name }}</b></p>
+                <p>Duration: <b>{{ tr.duration }}</b></p>
+
+            </div>
+
+        {% endfor %}
+        </body>
+
+    </html>
