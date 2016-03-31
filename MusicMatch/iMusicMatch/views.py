@@ -8,7 +8,8 @@ from .models import *
 
 def mainpage(request):
     #rests = Restaurant.objects.filter(name__isnull=False)
-    return render(request, 'iMusicMatch/mainPage.html')#, {'rests':rests})
+    return render(request, 'iMusicMatch/mainPage.html')
+#, {'rests':rests})
 
 #
 # def new_restaurant(request):
