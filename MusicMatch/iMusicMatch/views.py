@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.core import serializers
+from django.http import *
 from django.utils import timezone
 from django.shortcuts import redirect
 
@@ -56,3 +58,11 @@ def ShowSpecificPlaylistReview(request, objID):
 def ShowSpecificGroupReview(request, objID):
     rvs = GroupReview.objects.filter(id=int(objID))
     return render(request, 'iMusicMatch/ListingHTMLGroupReview.html', {'rvs': rvs})
+
+def ListingXMLGroups(request):
+    data = serializers.serialize("xml", Group.objects.all())
+    return HttpResponse(data,content_type='application/xml')
+
+def ListingJSONGroups(request):
+    data = serializers.serialize("json", Group.objects.all())
+    return HttpResponse(data, content_type='application/json')
