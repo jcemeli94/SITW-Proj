@@ -57,4 +57,11 @@ urlpatterns = [
     url(r'^get/json/groupreview/$', views.ListingJSONGroupReviews, name='get_groupreview'),
     url(r'^get/json/playlistreview/$', views.ListingJSONPlaylistReviews, name='get_playlistreview'),
 
+    url(r'^get/json/group/(?P<objID>[0-9]+)',    views.ShowSpecificGroupJSON,    name='get_spec_group'),
+    url(r'^get/json/playlist/(?P<objID>[0-9]+)', views.ShowSpecificPlaylistJSON, name='get_spec_playlist'),
+    url(r'^get/json/track/(?P<objID>[0-9]+)',    views.ShowSpecificTrackJSON,    name='get_spec_track'),
+    url(r'^get/json/user/(?P<objID>[0-9]+)',     views.ShowSpecificUserJSON,     name='get_spec_track'),
+    url(r'^get/json/playlistreview/(?P<objID>[0-9]+)',  views.ShowSpecificPlaylistReviewJSON, name='get_spec_playlistreview'),
+    url(r'^get/json/groupreview/(?P<objID>[0-9]+)',     views.ShowSpecificGroupReviewJSON,    name='get_spec_groupreview'),
+
 ]

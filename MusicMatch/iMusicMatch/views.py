@@ -138,3 +138,27 @@ def ListingJSONPlaylistReviews(request):
 def ListingJSONGroupReviews(request):
     data = serializers.serialize("json", GroupReview.objects.all())
     return HttpResponse(data, content_type='application/json')
+
+def ShowSpecificGroupJSON(request, objID):
+    gps =serializers.serialize("json", Group.objects.filter(id=int(objID)))
+    return HttpResponse(gps,content_type='application/json')
+
+def ShowSpecificPlaylistJSON(request, objID):
+    playl =serializers.serialize("json", Playlist.objects.filter(id=int(objID)))
+    return HttpResponse(playl,content_type='application/json')
+
+def ShowSpecificTrackJSON(request, objID):
+    trs = serializers.serialize("json", Track.objects.filter(id=int(objID)))
+    return HttpResponse(trs,content_type='application/json')
+
+def ShowSpecificUserJSON(request, objID):
+    usrs =serializers.serialize("json", User.objects.filter(id=int(objID)))
+    return HttpResponse(usrs,content_type='application/json')
+
+def ShowSpecificPlaylistReviewJSON(request, objID):
+    rvs =serializers.serialize("json", PlaylistReview.objects.filter(id=int(objID)))
+    return HttpResponse(rvs,content_type='application/json')
+
+def ShowSpecificGroupReviewJSON(request, objID):
+    rvs =serializers.serialize("json", GroupReview.objects.filter(id=int(objID)))
+    return HttpResponse(rvs,content_type='application/json')
