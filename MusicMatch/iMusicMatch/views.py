@@ -59,9 +59,61 @@ def ShowSpecificGroupReview(request, objID):
     rvs = GroupReview.objects.filter(id=int(objID))
     return render(request, 'iMusicMatch/ListingHTMLGroupReview.html', {'rvs': rvs})
 
+
+# XML
+
 def ListingXMLGroups(request):
     data = serializers.serialize("xml", Group.objects.all())
     return HttpResponse(data,content_type='application/xml')
+
+def ListingXMLPlaylists(request):
+    data = serializers.serialize("xml", Playlist.objects.all())
+    return HttpResponse(data,content_type='application/xml')
+
+def ListingXMLTracks(request):
+    data = serializers.serialize("xml", Track.objects.all())
+    return HttpResponse(data,content_type='application/xml')
+
+def ListingXMLUsers(request):
+    data = serializers.serialize("xml", User.objects.all())
+    return HttpResponse(data,content_type='application/xml')
+
+def ListingXMLPlaylistReviews(request):
+    data = serializers.serialize("xml", PlaylistReview.objects.all())
+    return HttpResponse(data,content_type='application/xml')
+
+def ListingXMLGroupReviews(request):
+    data = serializers.serialize("xml", GroupReview.objects.all())
+    return HttpResponse(data,content_type='application/xml')
+
+
+
+def ShowSpecificGroupXML(request, objID):
+    gps =serializers.serialize("xml", Group.objects.filter(id=int(objID)))
+    return HttpResponse(gps,content_type='application/xml')
+
+def ShowSpecificPlaylistXML(request, objID):
+    playl =serializers.serialize("xml", Playlist.objects.filter(id=int(objID)))
+    return HttpResponse(playl,content_type='application/xml')
+
+def ShowSpecificTrackXML(request, objID):
+    trs = serializers.serialize("xml", Track.objects.filter(id=int(objID)))
+    return HttpResponse(trs,content_type='application/xml')
+
+def ShowSpecificUserXML(request, objID):
+    usrs =serializers.serialize("xml", User.objects.filter(id=int(objID)))
+    return HttpResponse(usrs,content_type='application/xml')
+
+def ShowSpecificPlaylistReviewXML(request, objID):
+    rvs =serializers.serialize("xml", PlaylistReview.objects.filter(id=int(objID)))
+    return HttpResponse(rvs,content_type='application/xml')
+
+def ShowSpecificGroupReviewXML(request, objID):
+    rvs =serializers.serialize("xml", GroupReview.objects.filter(id=int(objID)))
+    return HttpResponse(rvs,content_type='application/xml')
+
+
+# JSON
 
 def ListingJSONGroups(request):
     data = serializers.serialize("json", Group.objects.all())
