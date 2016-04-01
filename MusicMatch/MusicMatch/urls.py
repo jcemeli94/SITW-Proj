@@ -51,5 +51,10 @@ urlpatterns = [
 
 
     url(r'^get/json/group/$', views.ListingJSONGroups, name='get_group'),
+    url(r'^get/json/track/$', views.ListingJSONTracks, name='get_track'),
+    url(r'^get/json/playlist/$', views.ListingJSONPlaylists, name='get_playlist'),
+    url(r'^get/json/user/$', views.ListingJSONUsers, name='get_user'),
+    url(r'^get/json/groupreview/$', views.ListingJSONGroupReviews, name='get_groupreview'),
+    url(r'^get/json/playlistreview/$', views.ListingJSONPlaylistReviews, name='get_playlistreview'),
 
 ]
