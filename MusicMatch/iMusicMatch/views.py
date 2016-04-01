@@ -34,25 +34,25 @@ def ListingHTMLGroupReviews(request):
     return render(request, 'iMusicMatch/ListingHTMLGroupReview.html', {'rvs': rvs})
 
 def ShowSpecificGroup(request, objID):
-    gps = Group.objects.filter(scID__exact=int(objID))
+    gps = Group.objects.filter(id=int(objID))
     return render(request, 'iMusicMatch/ListingHTMLGroup.html', {'gps':gps})
 
 def ShowSpecificPlaylist(request, objID):
-    playl = Playlist.objects.filter(scID__exact=int(objID))
+    playl = Playlist.objects.filter(id=int(objID))
     return render(request, 'iMusicMatch/ListingHTMLPlaylist.html', {'playl':playl})
 
 def ShowSpecificTrack(request, objID):
-    trs = Track.objects.filter(scID__exact=int(objID))
+    trs = Track.objects.filter(id=int(objID))
     return render(request, 'iMusicMatch/ListingHTMLTrack.html', {'trs': trs})
 
 def ShowSpecificUser(request, objID):
-    usrs = User.objects.filter(scID__exact=int(objID))
+    usrs = User.objects.filter(id=int(objID))
     return render(request, 'iMusicMatch/ListingHTMLUser.html', {'usrs': usrs})
 
 def ShowSpecificPlaylistReview(request, objID):
-    rvs = PlaylistReview.objects.filter(scID__exact=objID)
+    rvs = PlaylistReview.objects.filter(id=int(objID))
     return render(request, 'iMusicMatch/ListingHTMLPlaylistReview.html', {'rvs': rvs})
 
 def ShowSpecificGroupReview(request, objID):
-    rvs = GroupReview.objects.filter(scID__exact=objID)
+    rvs = GroupReview.objects.filter(id=int(objID))
     return render(request, 'iMusicMatch/ListingHTMLGroupReview.html', {'rvs': rvs})
