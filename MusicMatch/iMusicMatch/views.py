@@ -66,3 +66,23 @@ def ListingXMLGroups(request):
 def ListingJSONGroups(request):
     data = serializers.serialize("json", Group.objects.all())
     return HttpResponse(data, content_type='application/json')
+
+def ListingJSONTracks(request):
+    data = serializers.serialize("json", Track.objects.all())
+    return HttpResponse(data, content_type='application/json')
+
+def ListingJSONPlaylists(request):
+    data = serializers.serialize("json", Playlist.objects.all())
+    return HttpResponse(data, content_type='application/json')
+
+def ListingJSONUsers(request):
+    data = serializers.serialize("json", User.objects.all())
+    return HttpResponse(data, content_type='application/json')
+
+def ListingJSONPlaylistReviews(request):
+    data = serializers.serialize("json", PlaylistReview.objects.all())
+    return HttpResponse(data, content_type='application/json')
+
+def ListingJSONGroupReviews(request):
+    data = serializers.serialize("json", GroupReview.objects.all())
+    return HttpResponse(data, content_type='application/json')
