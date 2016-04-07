@@ -162,3 +162,11 @@ def ShowSpecificPlaylistReviewJSON(request, objID):
 def ShowSpecificGroupReviewJSON(request, objID):
     rvs =serializers.serialize("json", GroupReview.objects.filter(id=int(objID)))
     return HttpResponse(rvs,content_type='application/json')
+
+#AuthTest
+
+def authSys(request):
+    return render(request, 'iMusicMatch/AuthSystem.html')
+
+def signUp(request):
+    return render(request, 'iMusicMatch/AuthSignUp.html')

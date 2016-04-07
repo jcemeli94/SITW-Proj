@@ -21,6 +21,9 @@ urlpatterns = [
     url(r'^$', mainpage),
     url(r'^admin/', include(admin.site.urls)),
 
+    url(r'^auth/', views.authSys, name='sys_auth'),
+    url(r'^sign/', views.signUp, name='sign_up'),
+
     url(r'^get/html/group/$',           views.ListingHTMLGroups,     name='get_group'),
     url(r'^get/html/playlist/$',        views.ListingHTMLPlaylists,  name='get_playlist'),
     url(r'^get/html/track/$',           views.ListingHTMLTracks,     name='get_track'),
