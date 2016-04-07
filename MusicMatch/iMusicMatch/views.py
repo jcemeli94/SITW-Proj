@@ -11,29 +11,39 @@ from .models import *
 def mainpage(request):
     return render(request, 'iMusicMatch/mainPage.html')
 
+def ListEntity(request, entityType, entitys):
+    return render(request, 'iMusicMatch/ListingEntity.html', {'entitys': entitys, 'entityType': entityType})
+
+
 def ListingHTMLGroups(request):
-    gps = Group.objects.filter(name__isnull=False)
-    return render(request, 'iMusicMatch/ListingHTMLGroup.html', {'gps': gps})
+    entitys = Group.objects.filter(name__isnull=False)
+    entityType = "Group"
+    return ListEntity(request, entityType, entitys)
 
 def ListingHTMLPlaylists(request):
-    playl = Playlist.objects.filter(name__isnull=False)
-    return render(request, 'iMusicMatch/ListingHTMLPlaylist.html', {'playl' : playl})
+    entitys = Playlist.objects.filter(name__isnull=False)
+    entityType = "Playlist"
+    return ListEntity(request, entityType, entitys)
 
 def ListingHTMLTracks(request):
-    trs = Track.objects.filter(name__isnull=False)
-    return render(request, 'iMusicMatch/ListingHTMLTrack.html', {'trs': trs})
+    entitys = Track.objects.filter(name__isnull=False)
+    entityType = "Track"
+    return ListEntity(request, entityType, entitys)
 
 def ListingHTMLUsers(request):
-    usrs = User.objects.filter(name__isnull=False)
-    return render(request, 'iMusicMatch/ListingHTMLUser.html', {'usrs': usrs})
+    entitys = User.objects.filter(name__isnull=False)
+    entityType = "User"
+    return ListEntity(request, entityType, entitys)
 
 def ListingHTMLPlaylistReviews(request):
-    rvs = PlaylistReview.objects.filter(scID__isnull=False)
-    return render(request, 'iMusicMatch/ListingHTMLPlaylistReview.html', {'rvs': rvs})
+    entitys = PlaylistReview.objects.filter(name__isnull=False)
+    entityType = "Playlist reviews"
+    return ListEntity(request, entityType, entitys)
 
 def ListingHTMLGroupReviews(request):
-    rvs = GroupReview.objects.filter(scID__isnull=False)
-    return render(request, 'iMusicMatch/ListingHTMLGroupReview.html', {'rvs': rvs})
+    entitys = GroupReview.objects.filter(name__isnull=False)
+    entityType = "Group Reviews"
+    return ListEntity(request, entityType, entitys)
 
 def ShowSpecificGroup(request, objID):
     gps = Group.objects.filter(id=int(objID))
@@ -120,13 +130,13 @@ def ShowSpecificGroupReviewXML(request, objID):
 
 #Tests
 
-def ListEntity(request, entity, extension):
-    print entity
-    entity = entity[:-1]
-    entity = entity.capitalize()
-    print entity
-    print extension
-    data = serializers.serialize(extension, eval(entity).objects.all())
-    print data
-    contType = 'application/', extension
-    return HttpResponse(data, content_type=contType)
+# def ListEntity(request, entity, extension):
+#     print entity
+#     entity = entity[:-1]
+#     entity = entity.capitalize()
+#     print entity
+#     print extension
+#     data = serializers.serialize(extension, eval(entity).objects.all())
+#     print data
+#     contType = 'application/', extension
+#     return HttpResponse(data, content_type=contType)

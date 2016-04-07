@@ -1,0 +1,24 @@
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+ <html>
+        <head>
+            <title>Group list</title>
+        </head>
+        <body>
+             <div>
+                <h1><p>{{ entityType }} list</p></h1>
+                 <br> </br>
+            </div>
+
+        {% for entity in entitys %}
+         <!--{{ entity }}-->
+
+            <br> </br>
+                <td><a href={{ entity.id }}>{{ entity }}</a></td>
+{#                <p>Track List: <b>{{ pl.trackList }}</b></p>#}
+
+        {% endfor %}
+        </body>
+
+    </html>
