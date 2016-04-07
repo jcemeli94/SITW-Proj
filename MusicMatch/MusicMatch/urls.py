@@ -44,12 +44,12 @@ urlpatterns = [
     url(r'^playlistreview.(?P<extension>["xml"|"json"]+)/$', views.ListingExtensionPlaylistReviews, name='get_playlistreview'),
     url(r'^groupreviews.(?P<extension>["xml"|"json"]+)/$', views.ListingExtensionGroupReviews, name='get_groupreview'),
 
-    url(r'^groups.xml/(?P<objID>[0-9]+)',    views.ShowSpecificGroupXML,    name='get_spec_group'),
-    url(r'^playlists.xml/(?P<objID>[0-9]+)', views.ShowSpecificPlaylistXML, name='get_spec_playlist'),
-    url(r'^tracks.xml/(?P<objID>[0-9]+)',    views.ShowSpecificTrackXML,    name='get_spec_track'),
-    url(r'^users.xml/(?P<objID>[0-9]+)',     views.ShowSpecificUserXML,     name='get_spec_track'),
-    url(r'^playlistreviews.xml/(?P<objID>[0-9]+)',  views.ShowSpecificPlaylistReviewXML, name='get_spec_playlistreview'),
-    url(r'^groupreviews.xml/(?P<objID>[0-9]+)',     views.ShowSpecificGroupReviewXML,    name='get_spec_groupreview')
+    url(r'^groups.(?P<extension>["xml"|"json"]+)/(?P<objID>[0-9]+)',    views.ShowSpecificGroupExtension,    name='get_spec_group'),
+    url(r'^playlists.(?P<extension>["xml"|"json"]+)/(?P<objID>[0-9]+)', views.ShowSpecificPlaylistExtension, name='get_spec_playlist'),
+    url(r'^tracks.(?P<extension>["xml"|"json"]+)/(?P<objID>[0-9]+)',    views.ShowSpecificTrackExtension,    name='get_spec_track'),
+    url(r'^users.(?P<extension>["xml"|"json"]+)/(?P<objID>[0-9]+)',     views.ShowSpecificUserExtension,     name='get_spec_track'),
+    url(r'^playlistreviews.(?P<extension>["xml"|"json"]+)/(?P<objID>[0-9]+)',  views.ShowSpecificPlaylistReviewExtension, name='get_spec_playlistreview'),
+    url(r'^groupreviews.(?P<extension>["xml"|"json"]+)/(?P<objID>[0-9]+)',     views.ShowSpecificGroupReviewExtension,    name='get_spec_groupreview')
 
 ]
 #Tests

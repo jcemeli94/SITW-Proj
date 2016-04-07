@@ -16,27 +16,27 @@ def ListEntity(request, basename, entityType, entitys):
 
 
 def ListingHTMLGroups(request):
-    entitys = Group.objects.filter(name__isnull=False)
+    entitys = Group.objects.all()
     return ListEntity(request, "groups", "Group", entitys)
 
 def ListingHTMLPlaylists(request):
-    entitys = Playlist.objects.filter(name__isnull=False)
+    entitys = Playlist.objects.all()
     return ListEntity(request,"playlists", "Playlist", entitys)
 
 def ListingHTMLTracks(request):
-    entitys = Track.objects.filter(name__isnull=False)
+    entitys = Track.objects.all()
     return ListEntity(request, "tracks", "Track", entitys)
 
 def ListingHTMLUsers(request):
-    entitys = User.objects.filter(name__isnull=False)
+    entitys = User.objects.all()
     return ListEntity(request, "users", "User", entitys)
 
 def ListingHTMLPlaylistReviews(request):
-    entitys = PlaylistReview.objects.filter(name__isnull=False)
+    entitys = PlaylistReview.objects.all()
     return ListEntity(request, "playlistreviews", "Playlist reviews", entitys)
 
 def ListingHTMLGroupReviews(request):
-    entitys = GroupReview.objects.filter(name__isnull=False)
+    entitys = GroupReview.objects.all()
     return ListEntity(request, "groupreviews", "Group reviews", entitys)
 
 def ShowSpecificGroup(request, objID):
@@ -98,29 +98,35 @@ def ListingExtensionGroupReviews(request, extension):
 
 
 
-def ShowSpecificGroupXML(request, objID):
-    gps =serializers.serialize("xml", Group.objects.filter(id=int(objID)))
-    return HttpResponse(gps,content_type='application/xml')
+def ShowSpecificGroupExtension(request, extension, objID):
+    gps =serializers.serialize(extension, Group.objects.filter(id=int(objID)))
+    contType = 'application/', extension
+    return HttpResponse(gps,content_type=contType)
 
-def ShowSpecificPlaylistXML(request, objID):
-    playl =serializers.serialize("xml", Playlist.objects.filter(id=int(objID)))
-    return HttpResponse(playl,content_type='application/xml')
+def ShowSpecificPlaylistExtension(request, extension, objID):
+    playl =serializers.serialize(extension, Playlist.objects.filter(id=int(objID)))
+    contType = 'application/', extension
+    return HttpResponse(playl,content_type=contType)
 
-def ShowSpecificTrackXML(request, objID):
-    trs = serializers.serialize("xml", Track.objects.filter(id=int(objID)))
-    return HttpResponse(trs,content_type='application/xml')
+def ShowSpecificTrackExtension(request, extension, objID):
+    trs = serializers.serialize(extension, Track.objects.filter(id=int(objID)))
+    contType = 'application/', extension
+    return HttpResponse(trs,content_type=contType)
 
-def ShowSpecificUserXML(request, objID):
-    usrs =serializers.serialize("xml", User.objects.filter(id=int(objID)))
-    return HttpResponse(usrs,content_type='application/xml')
+def ShowSpecificUserExtension(request, extension, objID):
+    usrs =serializers.serialize(extension, User.objects.filter(id=int(objID)))
+    contType = 'application/', extension
+    return HttpResponse(usrs,content_type=contType)
 
-def ShowSpecificPlaylistReviewXML(request, objID):
-    rvs =serializers.serialize("xml", PlaylistReview.objects.filter(id=int(objID)))
-    return HttpResponse(rvs,content_type='application/xml')
+def ShowSpecificPlaylistReviewExtension(request, extension, objID):
+    rvs =serializers.serialize(extension, PlaylistReview.objects.filter(id=int(objID)))
+    contType = 'application/', extension
+    return HttpResponse(rvs,content_type=contType)
 
-def ShowSpecificGroupReviewXML(request, objID):
-    rvs =serializers.serialize("xml", GroupReview.objects.filter(id=int(objID)))
-    return HttpResponse(rvs,content_type='application/xml')
+def ShowSpecificGroupReviewExtension(request, extension, objID):
+    rvs =serializers.serialize(extension, GroupReview.objects.filter(id=int(objID)))
+    contType = 'application/', extension
+    return HttpResponse(rvs,content_type=contType)
 
 #Tests
 
