@@ -62,29 +62,35 @@ def ShowSpecificGroupReview(request, objID):
 
 # XML
 
-def ListingXMLGroups(request):
-    data = serializers.serialize("xml", Group.objects.all())
-    return HttpResponse(data,content_type='application/xml')
+def ListingExtensionGroups(request, extension):
+    data = serializers.serialize(extension, Group.objects.all())
+    contType = 'application/', extension
+    return HttpResponse(data,content_type=contType)
 
-def ListingXMLPlaylists(request):
-    data = serializers.serialize("xml", Playlist.objects.all())
-    return HttpResponse(data,content_type='application/xml')
+def ListingExtensionPlaylists(request, extension):
+    data = serializers.serialize(extension, Playlist.objects.all())
+    contType = 'application/', extension
+    return HttpResponse(data,content_type=contType)
 
-def ListingXMLTracks(request):
-    data = serializers.serialize("xml", Track.objects.all())
-    return HttpResponse(data,content_type='application/xml')
+def ListingExtensionTracks(request, extension):
+    data = serializers.serialize(extension, Track.objects.all())
+    contType = 'application/', extension
+    return HttpResponse(data,content_type=contType)
 
-def ListingXMLUsers(request):
-    data = serializers.serialize("xml", User.objects.all())
-    return HttpResponse(data,content_type='application/xml')
+def ListingExtensionUsers(request, extension):
+    data = serializers.serialize(extension, User.objects.all())
+    contType = 'application/', extension
+    return HttpResponse(data,content_type=contType)
 
-def ListingXMLPlaylistReviews(request):
-    data = serializers.serialize("xml", PlaylistReview.objects.all())
-    return HttpResponse(data,content_type='application/xml')
+def ListingExtensionPlaylistReviews(request, extension):
+    data = serializers.serialize(extension, PlaylistReview.objects.all())
+    contType = 'application/', extension
+    return HttpResponse(data,content_type=contType)
 
-def ListingXMLGroupReviews(request):
-    data = serializers.serialize("xml", GroupReview.objects.all())
-    return HttpResponse(data,content_type='application/xml')
+def ListingExtensionGroupReviews(request, extension):
+    data = serializers.serialize(extension, Group.objects.all())
+    contType = 'application/', extension
+    return HttpResponse(data,content_type=contType)
 
 
 
@@ -112,53 +118,15 @@ def ShowSpecificGroupReviewXML(request, objID):
     rvs =serializers.serialize("xml", GroupReview.objects.filter(id=int(objID)))
     return HttpResponse(rvs,content_type='application/xml')
 
+#Tests
 
-# JSON
-
-def ListingJSONGroups(request):
-    data = serializers.serialize("json", Group.objects.all())
-    return HttpResponse(data, content_type='application/json')
-
-def ListingJSONTracks(request):
-    data = serializers.serialize("json", Track.objects.all())
-    return HttpResponse(data, content_type='application/json')
-
-def ListingJSONPlaylists(request):
-    data = serializers.serialize("json", Playlist.objects.all())
-    return HttpResponse(data, content_type='application/json')
-
-def ListingJSONUsers(request):
-    data = serializers.serialize("json", User.objects.all())
-    return HttpResponse(data, content_type='application/json')
-
-def ListingJSONPlaylistReviews(request):
-    data = serializers.serialize("json", PlaylistReview.objects.all())
-    return HttpResponse(data, content_type='application/json')
-
-def ListingJSONGroupReviews(request):
-    data = serializers.serialize("json", GroupReview.objects.all())
-    return HttpResponse(data, content_type='application/json')
-
-def ShowSpecificGroupJSON(request, objID):
-    gps =serializers.serialize("json", Group.objects.filter(id=int(objID)))
-    return HttpResponse(gps,content_type='application/json')
-
-def ShowSpecificPlaylistJSON(request, objID):
-    playl =serializers.serialize("json", Playlist.objects.filter(id=int(objID)))
-    return HttpResponse(playl,content_type='application/json')
-
-def ShowSpecificTrackJSON(request, objID):
-    trs = serializers.serialize("json", Track.objects.filter(id=int(objID)))
-    return HttpResponse(trs,content_type='application/json')
-
-def ShowSpecificUserJSON(request, objID):
-    usrs =serializers.serialize("json", User.objects.filter(id=int(objID)))
-    return HttpResponse(usrs,content_type='application/json')
-
-def ShowSpecificPlaylistReviewJSON(request, objID):
-    rvs =serializers.serialize("json", PlaylistReview.objects.filter(id=int(objID)))
-    return HttpResponse(rvs,content_type='application/json')
-
-def ShowSpecificGroupReviewJSON(request, objID):
-    rvs =serializers.serialize("json", GroupReview.objects.filter(id=int(objID)))
-    return HttpResponse(rvs,content_type='application/json')
+def ListEntity(request, entity, extension):
+    print entity
+    entity = entity[:-1]
+    entity = entity.capitalize()
+    print entity
+    print extension
+    data = serializers.serialize(extension, eval(entity).objects.all())
+    print data
+    contType = 'application/', extension
+    return HttpResponse(data, content_type=contType)
