@@ -11,39 +11,33 @@ from .models import *
 def mainpage(request):
     return render(request, 'iMusicMatch/mainPage.html')
 
-def ListEntity(request, entityType, entitys):
-    return render(request, 'iMusicMatch/ListingEntity.html', {'entitys': entitys, 'entityType': entityType})
+def ListEntity(request, basename, entityType, entitys):
+    return render(request, 'iMusicMatch/ListingEntity.html', {'basename':basename,'entitys': entitys, 'entityType': entityType})
 
 
 def ListingHTMLGroups(request):
     entitys = Group.objects.filter(name__isnull=False)
-    entityType = "Group"
-    return ListEntity(request, entityType, entitys)
+    return ListEntity(request, "groups", "Group", entitys)
 
 def ListingHTMLPlaylists(request):
     entitys = Playlist.objects.filter(name__isnull=False)
-    entityType = "Playlist"
-    return ListEntity(request, entityType, entitys)
+    return ListEntity(request,"playlists", "Playlist", entitys)
 
 def ListingHTMLTracks(request):
     entitys = Track.objects.filter(name__isnull=False)
-    entityType = "Track"
-    return ListEntity(request, entityType, entitys)
+    return ListEntity(request, "tracks", "Track", entitys)
 
 def ListingHTMLUsers(request):
     entitys = User.objects.filter(name__isnull=False)
-    entityType = "User"
-    return ListEntity(request, entityType, entitys)
+    return ListEntity(request, "users", "User", entitys)
 
 def ListingHTMLPlaylistReviews(request):
     entitys = PlaylistReview.objects.filter(name__isnull=False)
-    entityType = "Playlist reviews"
-    return ListEntity(request, entityType, entitys)
+    return ListEntity(request, "playlistreviews", "Playlist reviews", entitys)
 
 def ListingHTMLGroupReviews(request):
     entitys = GroupReview.objects.filter(name__isnull=False)
-    entityType = "Group Reviews"
-    return ListEntity(request, entityType, entitys)
+    return ListEntity(request, "groupreviews", "Group reviews", entitys)
 
 def ShowSpecificGroup(request, objID):
     gps = Group.objects.filter(id=int(objID))

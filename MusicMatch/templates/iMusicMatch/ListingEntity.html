@@ -3,22 +3,23 @@
 
  <html>
         <head>
-            <title>Group list</title>
+            <title>{{ entityType }} list</title>
         </head>
         <body>
              <div>
                 <h1><p>{{ entityType }} list</p></h1>
                  <br> </br>
             </div>
-
+        <table style="width:25%">
         {% for entity in entitys %}
          <!--{{ entity }}-->
-
-            <br> </br>
-                <td><a href={{ entity.id }}>{{ entity }}</a></td>
-{#                <p>Track List: <b>{{ pl.trackList }}</b></p>#}
-
+            <tr>
+                <td><a href={{ entity.id }}>{{ entity }}.</a></td>
+                <td><a href="/{{ basename }}.json/{{ entity.id }}">JSON</a></td>
+                <td><a href="/{{ basename }}.xml/{{ entity.id }}">XML</a></td>
+            </tr>
         {% endfor %}
+        </table>
         </body>
 
     </html>
