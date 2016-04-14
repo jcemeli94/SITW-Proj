@@ -17,8 +17,7 @@ class Track(models.Model):
     scID = models.IntegerField()
     name = models.CharField(max_length=100)
     duration = models.IntegerField() #Time in seconds
-    # ownUsers = models.ManyToManyField(User)
-    #isInPlaylist = models.ManyToManyField(Playlist)
+    owner = models.ForeignKey(User)
 
     def __unicode__(self):
         return "{0}, {1}".format(self.scID, self.name)
@@ -26,7 +25,7 @@ class Track(models.Model):
 class Playlist(models.Model):
     scID = models.IntegerField()
     name = models.CharField(max_length=100)
-    ownUsers = models.ManyToManyField(User)
+    members = models.ManyToManyField(User)
     trackList = models.ManyToManyField(Track)
 
     def __unicode__(self):

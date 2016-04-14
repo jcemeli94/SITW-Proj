@@ -19,7 +19,7 @@
                 <p>Unique ID: <b>{{ pl.id }}</b></p>
                 <p>SoundCoud ID: <b>{{ pl.scID }}</b></p>
                 <p>Name: <b>{{ pl.name }}</b></p>
-                <p>Users: {%  for user in pl.ownUsers.all %}
+                <p>Users: {%  for user in pl.members.all %}
                     <li>{{ user }}
                     {% endfor %}</li></p>
                 <p>Tracklist: {%  for track in pl.trackList.all %}
