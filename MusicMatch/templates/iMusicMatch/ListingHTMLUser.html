@@ -17,13 +17,14 @@
             <div>
             <br> </br>
                 <p>SoundCoud ID: <b>{{ usr.scID }}</b></p>
+                <p>Permalink: <b>{{ user.permalink }}</b></p>
                 <p>Name: <b>{{ usr.name }}</b></p>
-                <p>Playlists: {%  for playlist in usr.userPlaylists.all %}
-                    <li>{{ playlist }}
-                    {% endfor %}</li></p>
-                <p>Tracks: {%  for track in usr.userTracks.all %}
-                    <li>{{ track }}
-                    {% endfor %}</li></p>
+{#                <p>Playlists: {%  for playlist in usr.userPlaylists.all %}#}
+{#                    <li>{{ playlist }}#}
+{#                    {% endfor %}</li></p>#}
+{#                <p>Tracks: {%  for track in usr.userTracks.all %}#}
+{#                    <li>{{ track }}#}
+{#                    {% endfor %}</li></p>#}
 
             </div>
 

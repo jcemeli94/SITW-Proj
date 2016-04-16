@@ -20,6 +20,9 @@
                 <p>Users: {%  for user in gp.userList.all %}
                     <li>{{ user }}
                     {% endfor %}</li></p>
+                <p>Tracks: {%  for track in gp.tracks.all %}
+                    <li>{{ track }}
+                    {% endfor %}</li></p>
 {#                <p>Track List: <b>{{ pl.trackList }}</b></p>#}
 
         {% endfor %}
