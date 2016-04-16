@@ -7,6 +7,7 @@ from django.contrib.auth.models import *
 
 class User(models.Model):
     scID = models.IntegerField()
+    permalink = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
     # userPlaylists = models.ManyToManyField(Playlist)
     # userTracks = models.ManyToManyField(Track)
