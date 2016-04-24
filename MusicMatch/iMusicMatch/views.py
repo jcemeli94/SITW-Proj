@@ -3,7 +3,7 @@ from django.core import serializers
 from django.http import *
 from django.utils import timezone
 from django.shortcuts import redirect
-
+from forms import *
 from .models import *
 #from forms import PostForm #USE FOR FORMULARIES
 
@@ -127,6 +127,29 @@ def ShowSpecificGroupReviewExtension(request, extension, objID):
     rvs =serializers.serialize(extension, GroupReview.objects.filter(id=int(objID)))
     contType = 'application/', extension
     return HttpResponse(rvs,content_type=contType)
+
+
+
+#Inserts
+
+def NewGroup(request):
+    if request.method == "POST":
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.published_date = timezone.now()
+            post.save()
+            return redirect('http://127.0.0.1:8000/') #canviar URL
+    else:
+        form = PostForm()
+    return render(request, 'iMusicMatch/NewGroup.html', {'form': form})
+
+
+
+def delete_group(request,rest_pk):
+    delRest= Group.objects.get(pk=rest_pk)
+    delRest.delete()
+    return redirect('http://127.0.0.1:8000/groups/')
 
 #Tests
 

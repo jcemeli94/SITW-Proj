@@ -49,8 +49,15 @@ urlpatterns = [
     url(r'^tracks.(?P<extension>["xml"|"json"]+)/(?P<objID>[0-9]+)',    views.ShowSpecificTrackExtension,    name='track_detail'),
     url(r'^users.(?P<extension>["xml"|"json"]+)/(?P<objID>[0-9]+)',     views.ShowSpecificUserExtension,     name='user_detail'),
     url(r'^playlistreviews.(?P<extension>["xml"|"json"]+)/(?P<objID>[0-9]+)',  views.ShowSpecificPlaylistReviewExtension, name='playlistreview_detail'),
-    url(r'^groupreviews.(?P<extension>["xml"|"json"]+)/(?P<objID>[0-9]+)',     views.ShowSpecificGroupReviewExtension,    name='groupreview_detail')
+    url(r'^groupreviews.(?P<extension>["xml"|"json"]+)/(?P<objID>[0-9]+)',     views.ShowSpecificGroupReviewExtension,    name='groupreview_detail'),
+
+    url(r'^post/new_group/$', views.NewGroup, name='new_group'),
+    url(r'^delete_group/(?P<rest_pk>\d+)/$', views.delete_group, name='delete_group')
 
 ]
+
+#Insert
+
+
 #Tests
 # url(r'^(?P<entity>["groups"|"playlists"|"tracks"|"users"|"playlistreviews"|"groupreviews"]+).(?P<extension>["xml"|"json"]+)/$', views.ListEntity, name='get_entity'),
