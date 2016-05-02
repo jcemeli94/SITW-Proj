@@ -5,7 +5,8 @@ from django.utils import timezone
 from django.shortcuts import redirect
 from forms import *
 from .models import *
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.contrib.auth.decorators import login_required
 #from forms import PostForm #USE FOR FORMULARIES
 
 
@@ -206,6 +207,11 @@ def login(request):
             return HttpResponse("Invalid login details supplied.")
     else:
         return render_to_response('iMusicMatch/login.html', {}, context)
+
+@login_required
+def logout(request):
+    auth_logout(request)
+    return HttpResponseRedirect('/')
 
 #Tests
 

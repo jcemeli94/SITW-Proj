@@ -54,7 +54,8 @@ urlpatterns = [
     url(r'^post/new_group/$', views.NewGroup, name='new_group'),
     url(r'^delete_group/(?P<rest_pk>\d+)/$', views.delete_group, name='delete_group'),
     url(r'^login/$', views.login, name='login'),
-    url(r'^register/$', views.register, name='register')
+    url(r'^register/$', views.register, name='register'),
+    url(r'^logout/$', views.logout, name='logout'),
 
 ]
 

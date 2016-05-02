@@ -10,8 +10,13 @@
                 <h1><p>Welcome to Music Match Application</p></h1>
                  <br> </br>
             </div>
-             <p><a href="register">Register here</a></p>
-             <p><a href="login">Login</a> </p>
+        {% if user.is_authenticated %}
+        Hi {{ user.username }}<br />
+        <a href="/logout/">Logout</a><br />
+        {% else %}
+        <a href="/register/">Register Here</a><br />
+        <a href="/login/">Login</a><br />
+        {% endif %}
              <p>Entity list:</p>
         <table style="width:25%">
       <tr>
