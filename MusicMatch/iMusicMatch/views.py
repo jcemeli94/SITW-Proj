@@ -162,6 +162,15 @@ def NewGroupReview(request):
         form = PostFormGroupReview()
     return render(request, 'iMusicMatch/NewGroupReview.html', {'form': form})
 
+@login_required
+def DeleteGroupReview(request, rest_pk):
+    delRest = GroupReview.objects.get(pk=rest_pk)
+    if delRest.user.__eq__(request.user):
+        delRest.delete()
+        return redirect('http://127.0.0.1:8000/groupreviews/')
+    else:
+        return render(request, 'iMusicMatch/error/UserNotMatch.html')
+
 
 
 

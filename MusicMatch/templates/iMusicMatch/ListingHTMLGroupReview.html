@@ -13,6 +13,7 @@
 
         {% for rv in rvs %}
          <!--{{ rv }}-->
+            <a class="marge" href="{% url 'delete_group_review' rv.id %}" class="top-menu">Eliminar  <span class="glyphicon glyphicon-minus"></span></a>
 
             <br> </br>
                 <p>SoundCoud ID: <b>{{ rv.groupID }}</b></p>
