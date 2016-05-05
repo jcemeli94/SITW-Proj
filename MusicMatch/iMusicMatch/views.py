@@ -7,6 +7,7 @@ from forms import *
 from .models import *
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
+from datetime import *
 #from forms import PostForm #USE FOR FORMULARIES
 
 
@@ -145,6 +146,22 @@ def NewGroup(request):
     else:
         form = PostForm()
     return render(request, 'iMusicMatch/NewGroup.html', {'form': form})
+
+@login_required
+def NewGroupReview(request):
+    if request.method == "POST":
+        form = PostFormGroupReview(request.POST)
+        if form.is_valid():
+            form.instance.date = datetime.today()
+            form.instance.user = request.user
+            post = form.save(commit=False)
+            post.published_date = timezone.now()
+            post.save()
+            return redirect('http://127.0.0.1:8000/') #canviar URL
+    else:
+        form = PostFormGroupReview()
+    return render(request, 'iMusicMatch/NewGroupReview.html', {'form': form})
+
 
 
 

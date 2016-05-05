@@ -52,6 +52,7 @@ urlpatterns = [
     url(r'^groupreviews.(?P<extension>["xml"|"json"]+)/(?P<objID>[0-9]+)',     views.ShowSpecificGroupReviewExtension,    name='groupreview_detail'),
 
     url(r'^post/new_group/$', views.NewGroup, name='new_group'),
+    url(r'^post/new_group_review/$', views.NewGroupReview, name='new_group_review'),
     url(r'^delete_group/(?P<rest_pk>\d+)/$', views.delete_group, name='delete_group'),
     url(r'^login/$', views.login, name='login'),
     url(r'^register/$', views.register, name='register'),

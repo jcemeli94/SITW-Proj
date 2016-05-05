@@ -2,11 +2,17 @@ from django import forms
 from django.contrib.auth.models import User as Django_User
 from .models import *
 
+class PostFormGroupReview(forms.ModelForm):
+
+    class Meta:
+        model = GroupReview
+        fields = ('groupID','review',)
+
 class PostForm(forms.ModelForm):
 
-        class Meta:
-            model = Group
-            fields = ('scID','name','userList',)
+    class Meta:
+        model = Group
+        fields = ('scID','name','userList',)
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
