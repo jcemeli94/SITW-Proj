@@ -145,7 +145,7 @@ def NewGroup(request):
             return redirect('http://127.0.0.1:8000/') #canviar URL
     else:
         form = PostForm()
-    return render(request, 'iMusicMatch/NewGroup.html', {'form': form})
+    return render(request, 'iMusicMatch/post/NewGroup.html', {'form': form})
 
 @login_required
 def NewGroupReview(request):
@@ -160,18 +160,40 @@ def NewGroupReview(request):
             return redirect('http://127.0.0.1:8000/') #canviar URL
     else:
         form = PostFormGroupReview()
-    return render(request, 'iMusicMatch/NewGroupReview.html', {'form': form})
+    return render(request, 'iMusicMatch/post/NewGroupReview.html', {'form': form})
+
+@login_required
+def NewPlaylistReview(request):
+    if request.method == "POST":
+        form = PostFormPlaylistReview(request.POST)
+        if form.is_valid():
+            form.instance.date = datetime.today()
+            form.instance.user = request.user
+            post = form.save(commit=False)
+            post.published_date = timezone.now()
+            post.save()
+            return redirect('http://127.0.0.1:8000/') #canviar URL
+    else:
+        form = PostFormPlaylistReview()
+    return render(request, 'iMusicMatch/post/NewGroupReview.html', {'form': form})
 
 @login_required
 def DeleteGroupReview(request, rest_pk):
     delRest = GroupReview.objects.get(pk=rest_pk)
     if delRest.user.__eq__(request.user):
         delRest.delete()
-        return redirect('http://127.0.0.1:8000/groupreviews/')
+        return render(request, 'iMusicMatch/ListingHTMLGroupReview.html')
     else:
         return render(request, 'iMusicMatch/error/UserNotMatch.html')
 
-
+@login_required
+def DeletePlaylistReview(request, rest_pk):
+    delRest = PlaylistReview.objects.get(pk=rest_pk)
+    if delRest.user.__eq__(request.user):
+        delRest.delete()
+        return render(request, 'iMusicMatch/ListingHTMLPlaylistReview.html')
+    else:
+        return render(request, 'iMusicMatch/error/UserNotMatch.html')
 
 
 def delete_group(request,rest_pk):

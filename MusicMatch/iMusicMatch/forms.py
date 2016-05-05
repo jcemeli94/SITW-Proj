@@ -8,6 +8,12 @@ class PostFormGroupReview(forms.ModelForm):
         model = GroupReview
         fields = ('groupID','review',)
 
+class PostFormPlaylistReview(forms.ModelForm):
+
+    class Meta:
+        model = PlaylistReview
+        fields = ('playlistID','review',)
+
 class PostForm(forms.ModelForm):
 
     class Meta:
