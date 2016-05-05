@@ -1,0 +1,21 @@
+{% load staticfiles %}
+<html>
+        <head>
+            <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+            <title></title>
+        </head>
+        <style>
+            p.serif {
+                font-family: Impact, Charcoal, sans-serif;
+                font-size: 200%
+            }
+        </style>
+
+    {% block content %}
+        <p class = "serif"> Edit Playlist Review</p>
+        <form method="POST" class="post-form">{% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="save btn btn-default">Save</button>
+        </form>
+    {% endblock %}
+</html>

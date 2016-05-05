@@ -196,6 +196,33 @@ def DeletePlaylistReview(request, rest_pk):
         return render(request, 'iMusicMatch/error/UserNotMatch.html')
 
 
+def EditPlaylistReview(request, rest_pk):
+    editItem = PlaylistReview.objects.get(pk=rest_pk)
+    if editItem.user.__eq__(request.user):
+        form = EditPlaylistReviewForm(request.POST)
+        if form.is_valid():
+            PlaylistReview.objects.filter(pk=rest_pk).update(review=form.instance.review)
+            return redirect('http://127.0.0.1:8000/')  # canviar URL
+        else:
+           form = EditPlaylistReviewForm()
+        return render(request, 'iMusicMatch/edit/EditPlaylistReview.html', {'form': form})
+    else:
+        return render(request, 'iMusicMatch/error/UserNotMatch.html')
+
+
+def EditGroupReview(request, rest_pk):
+    editItem = GroupReview.objects.get(pk=rest_pk)
+    if editItem.user.__eq__(request.user):
+        form = EditPlaylistReviewForm(request.POST)
+        if form.is_valid():
+            GroupReview.objects.filter(pk=rest_pk).update(review=form.instance.review)
+            return redirect('http://127.0.0.1:8000/')  # canviar URL
+        else:
+            form = EditGroupReviewForm()
+        return render(request, 'iMusicMatch/edit/EditGroupReview.html', {'form': form})
+    else:
+        return render(request, 'iMusicMatch/error/UserNotMatch.html')
+
 def delete_group(request,rest_pk):
     delRest= Group.objects.get(pk=rest_pk)
     delRest.delete()

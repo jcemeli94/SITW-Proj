@@ -13,7 +13,8 @@
 
         {% for rv in rvs %}
          <!--{{ rv }}-->
-<a class="marge" href="{% url 'delete_playlist_review' rv.id %}" class="top-menu">Delete  <span class="glyphicon glyphicon-minus"></span></a>
+            <a class="marge" href="{% url 'edit_playlist_review' rv.id %}" class="top-menu">Edit  <span class="glyphicon glyphicon-edit"></span></a>
+            <a class="marge" href="{% url 'delete_playlist_review' rv.id %}" class="top-menu">Delete  <span class="glyphicon glyphicon-minus"></span></a>
             <br> </br>
                 <p>SoundCoud ID: <b>{{ rv.playlistID }}</b></p>
                 <p>Author name: <b>{{ rv.user.username }}</b></p>

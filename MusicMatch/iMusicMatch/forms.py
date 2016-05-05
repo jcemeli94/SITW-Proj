@@ -20,6 +20,18 @@ class PostForm(forms.ModelForm):
         model = Group
         fields = ('scID','name','userList',)
 
+class EditPlaylistReviewForm(forms.ModelForm):
+
+    class Meta:
+        model = PlaylistReview
+        fields = ('review',)
+
+class EditGroupReviewForm(forms.ModelForm):
+
+    class Meta:
+        model = GroupReview
+        fields = ('review',)
+
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
 
