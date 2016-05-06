@@ -10,6 +10,13 @@
                 <h1><p>Welcome to Music Match Application</p></h1>
                  <br> </br>
             </div>
+        {% if user.is_authenticated %}
+        Hi {{ user.username }}<br />
+        <a href="/logout/">Logout</a><br />
+        {% else %}
+        <a href="/register/">Register Here</a><br />
+        <a href="/login/">Login</a><br />
+        {% endif %}
              <p>Entity list:</p>
         <table style="width:25%">
       <tr>
@@ -42,7 +49,9 @@
         <td><a href="playlistreviews.json">JSON</a></td>
         <td><a href="playlistreviews.xml">XML</a></td>
       </tr>
-            <td><a class="marge" href="{% url 'iMusicMatch.views.NewGroup' %}" class="top-menu" >Afegir un nou grup <span class="glyphicon glyphicon-plus"></span></a></td>
+            <br />
+            <td><a class="marge" href="post/new_playlist_review" class="top-menu" >Add new playlist review <span class="glyphicon glyphicon-plus"></span></a></td>
+            <td><a class="marge" href="post/new_group_review/" class="top-menu" >Add new group review <span class="glyphicon glyphicon-plus"></span></a></td>
 
 </table>
 

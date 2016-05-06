@@ -2,8 +2,18 @@ from django.db import models
 
 #Group, users, playlists, tracks
 
-from django.contrib.auth.models import User
-from django.contrib.auth.models import *
+from django.contrib.auth.models import User as Django_User, Group
+
+class UserProfile(models.Model):
+    # This line is required. Links UserProfile to a User model instance.
+    user = models.OneToOneField(Django_User)
+
+    # The additional attributes we wish to include.
+    realName = models.CharField(max_length=100)
+
+    # Override the __unicode__() method to return out something meaningful!
+    def __unicode__(self):
+        return self.user.username
 
 class User(models.Model):
     scID = models.IntegerField()
@@ -44,18 +54,18 @@ class Playlist(models.Model):
 
 class PlaylistReview(models.Model):
     playlistID = models.ForeignKey(Playlist)
-    username = models.CharField(max_length = 20)
+    user = models.ForeignKey(Django_User)
     date = models.DateField()
     review = models.CharField(max_length = 1000)
 
     def __unicode__(self):
-        return "{0}, {1}, {2}".format(self.id, self.playlistID.name, self.username)
+        return "{0}, {1}, {2}".format(self.id, self.playlistID.name, self.user.username)
 
 class GroupReview(models.Model):
     groupID = models.ForeignKey(Group)
-    username = models.CharField(max_length = 20)
+    user = models.ForeignKey(Django_User)
     date = models.DateField()
     review = models.CharField(max_length = 1000)
 
     def __unicode__(self):
-        return "{0}, {1}, {2}".format(self.id, self.groupID.name, self.username)
+        return "{0}, {1}, {2}".format(self.id, self.groupID.name, self.user.username)

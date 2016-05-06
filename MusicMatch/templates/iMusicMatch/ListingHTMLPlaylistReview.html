@@ -14,9 +14,14 @@
         {% for rv in rvs %}
          <!--{{ rv }}-->
 
+            {% if rv.user.id  == request.user.id %}
+            <a class="marge" href="{% url 'edit_playlist_review' rv.id %}" class="top-menu">Edit  <span class="glyphicon glyphicon-edit"></span></a>
+            <a class="marge" href="{% url 'delete_playlist_review' rv.id %}" class="top-menu">Delete  <span class="glyphicon glyphicon-minus"></span></a>
+            {% endif %}
+
             <br> </br>
                 <p>SoundCoud ID: <b>{{ rv.playlistID }}</b></p>
-                <p>Author name: <b>{{ rv.username }}</b></p>
+                <p>Author name: <b>{{ rv.user.username }}</b></p>
                 <p>Date: <b>{{ rv.date }}</b></p>
                 <p>Review: <b>{{ rv.review }}</b></p>
 

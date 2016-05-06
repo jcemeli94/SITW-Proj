@@ -1,10 +1,18 @@
-from django.shortcuts import render
+from django.shortcuts import *
 from django.core import serializers
 from django.http import *
 from django.utils import timezone
 from django.shortcuts import redirect
 from forms import *
 from .models import *
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.contrib.auth.decorators import login_required
+from datetime import *
+
+from django.contrib.auth.models import User, Group
+from rest_framework import viewsets
+from .serializers import UserSerializer, GroupSerializer
+
 #from forms import PostForm #USE FOR FORMULARIES
 
 
@@ -142,14 +150,165 @@ def NewGroup(request):
             return redirect('http://127.0.0.1:8000/') #canviar URL
     else:
         form = PostForm()
-    return render(request, 'iMusicMatch/NewGroup.html', {'form': form})
+    return render(request, 'iMusicMatch/post/NewGroup.html', {'form': form})
+
+@login_required
+def NewGroupReview(request):
+    if request.method == "POST":
+        form = PostFormGroupReview(request.POST)
+        if form.is_valid():
+            form.instance.date = datetime.today()
+            form.instance.user = request.user
+            post = form.save(commit=False)
+            post.published_date = timezone.now()
+            post.save()
+            return redirect('http://127.0.0.1:8000/') #canviar URL
+    else:
+        form = PostFormGroupReview()
+    return render(request, 'iMusicMatch/post/NewGroupReview.html', {'form': form})
+
+@login_required
+def NewPlaylistReview(request):
+    if request.method == "POST":
+        form = PostFormPlaylistReview(request.POST)
+        if form.is_valid():
+            form.instance.date = datetime.today()
+            form.instance.user = request.user
+            post = form.save(commit=False)
+            post.published_date = timezone.now()
+            post.save()
+            return redirect('http://127.0.0.1:8000/') #canviar URL
+    else:
+        form = PostFormPlaylistReview()
+    return render(request, 'iMusicMatch/post/NewGroupReview.html', {'form': form})
+
+@login_required
+def DeleteGroupReview(request, rest_pk):
+    delRest = GroupReview.objects.get(pk=rest_pk)
+    if delRest.user.__eq__(request.user):
+        delRest.delete()
+        return render(request, 'iMusicMatch/ListingHTMLGroupReview.html')
+    else:
+        return render(request, 'iMusicMatch/error/UserNotMatch.html')
+
+@login_required
+def DeletePlaylistReview(request, rest_pk):
+    delRest = PlaylistReview.objects.get(pk=rest_pk)
+    if delRest.user.__eq__(request.user):
+        delRest.delete()
+        return render(request, 'iMusicMatch/ListingHTMLPlaylistReview.html')
+    else:
+        return render(request, 'iMusicMatch/error/UserNotMatch.html')
 
 
+def EditPlaylistReview(request, rest_pk):
+    editItem = PlaylistReview.objects.get(pk=rest_pk)
+    if editItem.user.__eq__(request.user):
+        form = EditPlaylistReviewForm(request.POST)
+        if form.is_valid():
+            PlaylistReview.objects.filter(pk=rest_pk).update(review=form.instance.review)
+            return redirect('http://127.0.0.1:8000/')  # canviar URL
+        else:
+           form = EditPlaylistReviewForm()
+        return render(request, 'iMusicMatch/edit/EditPlaylistReview.html', {'form': form})
+    else:
+        return render(request, 'iMusicMatch/error/UserNotMatch.html')
+
+
+def EditGroupReview(request, rest_pk):
+    editItem = GroupReview.objects.get(pk=rest_pk)
+    if editItem.user.__eq__(request.user):
+        form = EditPlaylistReviewForm(request.POST)
+        if form.is_valid():
+            GroupReview.objects.filter(pk=rest_pk).update(review=form.instance.review)
+            return redirect('http://127.0.0.1:8000/')  # canviar URL
+        else:
+            form = EditGroupReviewForm()
+        return render(request, 'iMusicMatch/edit/EditGroupReview.html', {'form': form})
+    else:
+        return render(request, 'iMusicMatch/error/UserNotMatch.html')
 
 def delete_group(request,rest_pk):
     delRest= Group.objects.get(pk=rest_pk)
     delRest.delete()
     return redirect('http://127.0.0.1:8000/groups/')
+
+def login(request):
+    form = UserForm(request.POST)
+    if request.method == 'POST':
+        if request.session.test_cookie_worked():
+            request.session.delete_test_cookie()
+            return HttpResponse("You're logged in.")
+        else:
+            return HttpResponse("Please enable cookies and try again.")
+    request.session.set_test_cookie()
+    return render(request, 'iMusicMatch/login.html', {'form': form})
+
+def register(request):
+    context = RequestContext(request)
+    registered = False
+    if request.method == 'POST':
+        user_form = UserForm(data=request.POST)
+        profile_form = UserProfileForm(data=request.POST)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+            profile = profile_form.save(commit=False)
+            profile.user = user
+            profile.save()
+            registered = True
+        else:
+            print user_form.errors, profile_form.errors
+    else:
+        user_form = UserForm()
+        profile_form = UserProfileForm()
+    return render_to_response(
+        'iMusicMatch/register.html',
+        {'user_form': user_form, 'profile_form': profile_form, 'registered': registered},
+        context)
+
+
+def login(request):
+    context = RequestContext(request)
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user:
+            if user.is_active:
+                auth_login(request, user)
+                return HttpResponseRedirect('/')
+            else:
+                return HttpResponse("Your account is disabled.")
+        else:
+            print "Invalid login details: {0}, {1}".format(username, password)
+            return HttpResponse("Invalid login details supplied.")
+    else:
+        return render_to_response('iMusicMatch/login.html', {}, context)
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
+
+
+class GroupViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+
+@login_required
+def logout(request):
+    auth_logout(request)
+    return HttpResponseRedirect('/')
+
 
 #Tests
 

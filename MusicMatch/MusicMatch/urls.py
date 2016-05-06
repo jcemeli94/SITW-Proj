@@ -18,6 +18,17 @@ from django.contrib import admin
 from iMusicMatch.views import *
 from iMusicMatch import views
 
+
+from django.conf.urls import url, include
+from rest_framework import routers
+
+
+
+router = routers.DefaultRouter()
+router.register(r'users', views.UserViewSet)
+router.register(r'groups', views.GroupViewSet)
+
+
 entityList = ["groups", "playlists", "tracks", "users", "playlistreviews", "groupreviews"]
 
 urlpatterns = [
@@ -52,7 +63,22 @@ urlpatterns = [
     url(r'^groupreviews.(?P<extension>["xml"|"json"]+)/(?P<objID>[0-9]+)',     views.ShowSpecificGroupReviewExtension,    name='groupreview_detail'),
 
     url(r'^post/new_group/$', views.NewGroup, name='new_group'),
-    url(r'^delete_group/(?P<rest_pk>\d+)/$', views.delete_group, name='delete_group')
+    url(r'^post/new_group_review/$', views.NewGroupReview, name='new_group_review'),
+    url(r'^post/new_playlist_review/$', views.NewPlaylistReview, name = 'new_playlist_review'),
+    url(r'^edit_playlist_review/(?P<rest_pk>\d+)/$', views.EditPlaylistReview, name='edit_playlist_review'),
+    url(r'^edit_group_review/(?P<rest_pk>\d+)/$', views.EditGroupReview, name='edit_group_review'),
+    url(r'^delete_group/(?P<rest_pk>\d+)/$', views.delete_group, name='delete_group'),
+    url(r'^delete_group_review/(?P<rest_pk>\d+)/$', views.DeleteGroupReview, name='delete_group_review'),
+    url(r'^delete_playlist_review/(?P<rest_pk>\d+)/$', views.DeletePlaylistReview, name='delete_playlist_review'),
+    url(r'^login/$', views.login, name='login'),
+    url(r'^register/$', views.register, name='register'),
+    url(r'^logout/$', views.logout, name='logout'),
+
+
+
+
+    url(r'^', include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 
 ]
 
