@@ -2,7 +2,67 @@
 <html>
     <head>
         <title>MusicMatch</title>
-    </head>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+  <link rel="stylesheet" href="/resources/demos/style.css">
+
+  <script>
+        $(function(){
+            var genre = [
+                "Blues",
+                "Country",
+                "Electronic",
+                "Techno",
+                "Folk",
+                "Hip Hop",
+                    "Jazz",
+                    "Pop",
+                    "Soul",
+                    "Rock",
+                    "Metal",
+                    "Trance",
+                    "Shuffle",
+                    "Dance",
+                    "Comercial",
+            ];
+            $( "#groups_auto" ).autocomplete({
+                source: genre
+            });
+
+        });
+
+    </script>
+
+        <script>
+$(function () {
+    var getData = function (request, response) {
+        $.getJSON(
+            "http://gd.geobytes.com/AutoCompleteCity?callback=?&q=" + request.term,
+            function (data) {
+                response(data);
+            });
+    };
+
+    var selectItem = function (event, ui) {
+        $("#city").val(ui.item.value);
+        return false;
+    }
+
+    $("#city").autocomplete({
+        source: getData,
+        select: selectItem,
+        minLength: 4,
+        change: function() {
+            $("#city").val("").css("display", 2);
+        }
+    });
+});
+  </script>
+        </head>
 
     <body>
         <h1>Register</h1>
@@ -19,8 +79,20 @@
             {% csrf_token %}
             {{ user_form.as_p }}
             {{ profile_form.as_p }}
+
+              <div class="ui-widget">
+                <label for="tags">Favourite genre: </label>
+                <input id="groups_auto">
+
+              </div>
+            <label for="cities">City: </label>
+             <input id="city" />
+            <br>
             <input type="submit" name="submit" value="Register" />
+
         </form>
         {% endif %}
+
+
     </body>
 </html>

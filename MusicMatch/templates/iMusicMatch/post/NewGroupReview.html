@@ -1,9 +1,51 @@
 {% load staticfiles %}
 <html>
         <head>
-            <link rel="stylesheet" href="{% static 'css/blog.css' %}">
-            <title></title>
+         <!--   <link rel="stylesheet" href="{% static 'css/blog.css' %}">-->
+  <title>jQuery UI Autocomplete</title>
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+  <link rel="stylesheet" href="/resources/demos/style.css">
+
+            <script>
+        $(function(){
+            var language = [
+                    "catalan",
+                    "spanish",
+                    "english",
+                    "swedish",
+                    "german",
+                    "chinese",
+                    "portuguese",
+                    "japanese",
+                    "korean",
+                    "indian",
+                    "italian",
+                    "greek",
+
+            ];
+            $( "#auto_language" ).autocomplete({
+                source: language
+            });
+
+        });
+
+    </script>
+
         </head>
+
+
+ <body>
+
+
+</body>
+
+
         <style>
             p.serif {
                 font-family: Impact, Charcoal, sans-serif;
@@ -15,6 +57,11 @@
         <p class = "serif"> New Group Review data</p>
         <form method="POST" class="post-form">{% csrf_token %}
             {{ form.as_p }}
+
+            <label for="lan">Language: </label>
+            <input id="auto_language" />
+
+            <br>
             <button type="submit" class="save btn btn-default">Save</button>
         </form>
     {% endblock %}

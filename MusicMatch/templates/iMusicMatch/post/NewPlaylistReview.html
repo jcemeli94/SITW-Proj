@@ -3,6 +3,32 @@
         <head>
             <link rel="stylesheet" href="{% static 'css/blog.css' %}">
             <title></title>
+
+                   <script>
+        $(function(){
+            var language = [
+                    "catalan",
+                    "spanish",
+                    "english",
+                    "swedish",
+                    "german",
+                    "chinese",
+                    "portuguese",
+                    "japanese",
+                    "korean",
+                    "indian",
+                    "italian",
+                    "greek",
+
+            ];
+            $( "#auto_language" ).autocomplete({
+                source: language
+            });
+
+        });
+
+    </script>
+
         </head>
         <style>
             p.serif {
@@ -15,6 +41,14 @@
         <p class = "serif"> New Playlist Review data</p>
         <form method="POST" class="post-form">{% csrf_token %}
             {{ form.as_p }}
+            <div class="ui-widget">
+
+            <label for="lan">Language: </label>
+            <input id="auto_language" />
+
+            <br>
+
+              </div>
             <button type="submit" class="save btn btn-default">Save</button>
         </form>
     {% endblock %}
