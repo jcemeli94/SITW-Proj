@@ -7,24 +7,15 @@
     <!-- Load Soundcloud SDK -->
     <script src="https://connect.soundcloud.com/sdk/sdk-3.0.0.js"></script>
 
-    <!-- Source our javascript file which uses Soundcloud API
-    <script src="script.js"></script>-->
-
-   
 
   </head>
   <body>
 
-	<input id="dj">
+	<button id="ok" onclick="myFunction()"> CREATE</button>
 
-	<button id="ok" onclick="myFunction(dj.value)"> Search</button>
-
-    	<h1>User</h1>
-   		 <div id="user">DOM Loading...</div>
-    
-   		<h1>Tracklist</h1>
+   		<h1>Tracklist Random</h1>
    		 <div id="status">DOM Loading...</div>
-   		 
+
    		<h1>ID:</h1>
    		 <div id="id">DOM Loading...</div>
 
@@ -41,40 +32,33 @@ SC.initialize({
 });
 
 
-	
-  function myFunction(USER) {
 
+  function myFunction() {
 
-	var USER = "dj-faze";
-	var auto = document.getElementById('dj'); 
+    /* Use soundcloud API to get track list */
 
-	if(auto.value !== null && auto !== "undefined" && auto.value !== ""){
+    SC.get("/tracks/28524517").then(function(tracks){
 
-				USER = auto.value;
-	}
+        var trackList        = ""
+	    var trackListId      = ""
+	    var finalcontainer   = ""
 
-    $("#user").html(USER);
-
-    SC.get("/users/"+USER+"/tracks", {limit: 5}).then(function(tracks){
-
-        var trackList       = ""
-	    var trackListId     = ""
-	    var finalcontainer  = ""
-
+city=prompt('Latest track: ' + tracks[0].title);
 
       for (var i = 0; i < tracks.length; i++) {
+
 
         trackList += tracks[i].title + "<br />";
  	    trackListId += tracks[i].id + "<br />";
 	    finalcontainer += '<iframe width="100%" height="166" scrolling="no" frameborder="no"src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/'+tracks[i].id+'&amp;color=0066cc"></iframe>'+'<br />';
       }
 
-        $("#status")        .html(trackList);
-	    $("#id")            .html(trackListId);
-	    $("#container")     .html(finalcontainer);
-
+        $("#status")    .html(trackList);
+	    $("#id")        .html(trackListId);
+	    $("#container") .html(finalcontainer);
     });
   }
+
   myFunction();
 
 </script>

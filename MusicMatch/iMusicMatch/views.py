@@ -21,7 +21,8 @@ def mainpage(request):
 def api_soundcloud(request):
     return render(request, 'iMusicMatch/api/api_soundcloud.html')
 
-
+def api_soundcloud_random(request):
+    return render(request, 'iMusicMatch/api/api_soundcloud_random.html')
 
 
 def ListEntity(request, basename, entityType, entitys):
