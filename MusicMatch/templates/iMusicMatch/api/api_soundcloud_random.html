@@ -35,23 +35,19 @@ SC.initialize({
 
   function myFunction() {
 
-    /* Use soundcloud API to get track list */
+    var id_track =  13158665
 
-    SC.get("/tracks/28524517").then(function(tracks){
+    SC.get("/tracks/"+id_track+"?client_id=887b335a80f3e625454ebca548c53d96").then(function(tracks){
 
         var trackList        = ""
 	    var trackListId      = ""
 	    var finalcontainer   = ""
 
-city=prompt('Latest track: ' + tracks[0].title);
 
-      for (var i = 0; i < tracks.length; i++) {
+        trackList       += tracks[0].title + "<br />";
+ 	    trackListId     += tracks[0].id + "<br />";
+	    finalcontainer  += '<iframe width="100%" height="166" scrolling="no" frameborder="no"src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/'+tracks[0].id+'&amp;color=0066cc"></iframe>'+'<br />';
 
-
-        trackList += tracks[i].title + "<br />";
- 	    trackListId += tracks[i].id + "<br />";
-	    finalcontainer += '<iframe width="100%" height="166" scrolling="no" frameborder="no"src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/'+tracks[i].id+'&amp;color=0066cc"></iframe>'+'<br />';
-      }
 
         $("#status")    .html(trackList);
 	    $("#id")        .html(trackListId);
