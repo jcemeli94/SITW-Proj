@@ -17,6 +17,13 @@ from .serializer import UserSerializer, GroupSerializer
 def mainpage(request):
     return render(request, 'iMusicMatch/mainPage.html')
 
+
+def api_soundcloud(request):
+    return render(request, 'iMusicMatch/api/api_soundcloud.html')
+
+
+
+
 def ListEntity(request, basename, entityType, entitys):
     return render(request, 'iMusicMatch/ListingEntity.html', {'basename':basename,'entitys': entitys, 'entityType': entityType})
 

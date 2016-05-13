@@ -73,8 +73,8 @@ urlpatterns = [
     url(r'^logout/$', views.logout, name='logout'),
 
     url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
-
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api_soundcloud/$', views.api_soundcloud, name='api_soundcloud'),
 ]
 
 #Insert

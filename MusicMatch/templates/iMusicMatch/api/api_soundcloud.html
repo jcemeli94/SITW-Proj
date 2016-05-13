@@ -1,0 +1,80 @@
+<html>
+  <head>
+
+    <!-- Load jQuery from Google's CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+
+    <!-- Load Soundcloud SDK -->
+    <script src="https://connect.soundcloud.com/sdk/sdk-3.0.0.js"></script>
+
+    <!-- Source our javascript file which uses Soundcloud API
+    <script src="script.js"></script>-->
+
+   
+
+  </head>
+  <body>
+
+	<input id="dj">
+
+	<button id="ok" onclick="myFunction(dj.value)"> Search</button>
+
+    	<h1>User</h1>
+   		 <div id="user">DOM Loading...</div>
+    
+   		<h1>Tracklist</h1>
+   		 <div id="status">DOM Loading...</div>
+   		 
+   		<h1>ID:</h1>
+   		 <div id="id">DOM Loading...</div>
+
+<div id="container">DOM Loading...</div>
+  </body>
+
+
+  <script type="text/javascript">
+
+/* initialize soundcloud API with key */
+SC.initialize({
+    /* This is the sample client_id. you should replace this with your own*/
+    client_id: "887b335a80f3e625454ebca548c53d96"
+});
+
+
+	
+  function myFunction(USER) {
+    /* set user we wish to see trackList for */
+
+	var USER = "dj-faze";
+	var auto = document.getElementById('dj'); 
+
+	if(auto.value !== null && auto !== "undefined" && auto.value !== ""){
+
+				USER = auto.value;
+	}
+	
+
+
+    /* set user name on DOM */
+    $("#user").html(USER);
+    
+    /* Use soundcloud API to get track list */
+    SC.get("/users/"+USER+"/tracks", {limit: 5}).then(function(tracks){
+      var trackList = ""
+	var trackListId = ""
+	var finalcontainer = ""
+      for (var i = 0; i < tracks.length; i++) {
+        /* populate trackList html */
+        trackList += tracks[i].title + "<br />";
+ 	trackListId += tracks[i].id + "<br />";
+	finalcontainer += '<iframe width="100%" height="166" scrolling="no" frameborder="no"src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/'+tracks[i].id+'&amp;color=0066cc"></iframe>'+'<br />';
+      }
+      $("#status").html(trackList);
+	$("#id").html(trackListId);
+	$("#container").html(finalcontainer);
+    });
+  }
+  myFunction();
+
+</script>
+</html>
