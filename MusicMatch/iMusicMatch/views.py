@@ -24,6 +24,8 @@ def api_soundcloud(request):
 def api_soundcloud_random(request):
     return render(request, 'iMusicMatch/api/api_soundcloud_random.html')
 
+def api_soundcloud_userHeuristic(request):
+    return render(request, 'iMusicMatch/api/api_soundcloud_userHeuristic.html')
 
 def ListEntity(request, basename, entityType, entitys):
     return render(request, 'iMusicMatch/ListingEntity.html', {'basename':basename,'entitys': entitys, 'entityType': entityType})

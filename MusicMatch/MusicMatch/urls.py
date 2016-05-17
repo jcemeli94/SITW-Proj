@@ -76,6 +76,7 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api_soundcloud/$', views.api_soundcloud, name='api_soundcloud'),
     url(r'^api_soundcloud_random/$', views.api_soundcloud_random, name='api_soundcloud_random'),
+    url(r'^api_soundcloud_userHeuristic/$', views.api_soundcloud_userHeuristic, name='api_soundcloud_userHeuristic'),
 
 ]
 
