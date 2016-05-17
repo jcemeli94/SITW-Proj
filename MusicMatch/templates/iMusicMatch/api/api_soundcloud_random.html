@@ -30,37 +30,37 @@ SC.initialize({
     /* This is the sample client_id. you should replace this with your own*/
     client_id: "887b335a80f3e625454ebca548c53d96"
 });
-
-
-
+  var someTrack;
   function myFunction() {
 
-
+    var track_valida = 0
       var trackList = ""
       var trackListId = ""
       var finalcontainer = ""
-      var track_valida = 0
+	var counter = 0;
+	var something;
 
-
-      for (var i = 0; i < 5; i++) {
-          //while (track_valida < 5) {
+	for (var a = 0; a<20; a++){
               id_track = Math.floor(Math.random() * (210000000 - 8000000 + 1)) + 8000000;
 
 
-              SC.get("/tracks/" + id_track + "?client_id=887b335a80f3e625454ebca548c53d96").then(function (track) {
-
+              something = SC.get("/tracks/" + id_track + "?client_id=887b335a80f3e625454ebca548c53d96").then(function (track) {
 
                   trackList += track.title + "<br />";
                   trackListId += track.id + "<br />";
                   finalcontainer += '<iframe width="100%" height="166" scrolling="no" frameborder="no"src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/' + track.id + '&amp;color=0066cc"></iframe>' + '<br />';
 
-                  //track_valida = track_valida + 1;
-                  $("#status").html(trackList);
+		  $("#status").html(trackList);
                   $("#id").html(trackListId);
                   $("#container").html(finalcontainer);
+		track_valida = track_valida + 1;
+console.log("List size: "+track_valida);
               });
-          }
-     // }
+
+
+
+      }
+
   }
 
   myFunction();
