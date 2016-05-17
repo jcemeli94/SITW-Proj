@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.shortcuts import redirect
 from forms import *
 from .models import *
+from django.contrib.auth.models import User as Django_User, Group as Django_group
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from datetime import *
@@ -318,6 +319,33 @@ def logout(request):
     auth_logout(request)
     return HttpResponseRedirect('/')
 
+#API Post
+def api_sound_PostGroup(request):
+    scID = request.POST['scID']
+    name = request.POST['name']
+    # userList = request.POST['userList']
+    # tracks = request.POST['tracks']
+
+    try:
+        group = Group.objects.create(
+                scID = scID,
+                name = name,
+                userList = None,
+                tracks = None,
+                )
+        group.save()
+        respone = {
+            'status': 1,
+            'message': 'Group saved'
+
+        }
+
+    except Exception as e:
+        response = {
+            'status': 0,
+            'message': 'Something went wrong - '+str(e)
+        }
+    return HttpResponse(response, mimetype='application/json')
 #Tests
 
 # def ListEntity(request, entity, extension):

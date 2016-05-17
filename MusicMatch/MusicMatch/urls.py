@@ -78,6 +78,9 @@ urlpatterns = [
     url(r'^api_soundcloud_random/$', views.api_soundcloud_random, name='api_soundcloud_random'),
     url(r'^api_soundcloud_userHeuristic/$', views.api_soundcloud_userHeuristic, name='api_soundcloud_userHeuristic'),
 
+    #API Post
+    url(r'^api_sound_postGroup/?', views.api_sound_postGroup, name='postGroup'),
+
 ]
 
 #Insert
