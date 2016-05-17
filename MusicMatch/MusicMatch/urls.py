@@ -18,7 +18,7 @@ from django.contrib import admin
 from iMusicMatch.views import *
 from iMusicMatch import views
 
-from django.conf.urls import url, include
+from django.conf.urls import url, include, patterns
 from rest_framework import routers
 from iMusicMatch import views
 
@@ -29,7 +29,7 @@ router.register(r'groups', views.GroupViewSet)
 
 entityList = ["groups", "playlists", "tracks", "users", "playlistreviews", "groupreviews"]
 
-urlpatterns = [
+urlpatterns = patterns('iMusicMatch.views',
     url(r'^$', mainpage),
     url(r'^admin/', include(admin.site.urls)),
 
@@ -78,9 +78,9 @@ urlpatterns = [
     url(r'^api_soundcloud_random/$', views.api_soundcloud_random, name='api_soundcloud_random'),
     url(r'^api_soundcloud_userHeuristic/$', views.api_soundcloud_userHeuristic, name='api_soundcloud_userHeuristic'),
 
-    url(r'^api_sound_PostGroup/$', views.api_sound_PostGroup, name='post_group_review'),
+    url(r'^api_sound_PostGroup/$', views.api_sound_PostGroup, name='post_group_groupreview'),
 
-]
+                       )
 
 #Insert
 
