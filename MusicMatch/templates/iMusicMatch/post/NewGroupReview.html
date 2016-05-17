@@ -55,6 +55,8 @@
 
     {% block content %}
         <p class = "serif"> New Group Review data</p>
+        <input id="dj">
+	    <button id="ok" onclick="myFunction(dj.value)"> Apply</button>
         <form method="POST" class="post-form">{% csrf_token %}
             {{ form.as_p }}
 
@@ -65,4 +67,48 @@
             <button type="submit" class="save btn btn-default">Save</button>
         </form>
     {% endblock %}
+
+  <script type="text/javascript">
+
+/* initialize soundcloud API with key */
+SC.initialize({
+    /* This is the sample client_id. you should replace this with your own*/
+    client_id: "887b335a80f3e625454ebca548c53d96"
+});
+
+
+
+  function myFunction(USER) {
+	var auto = document.getElementById('dj');
+
+	if(auto.value !== null && auto !== "undefined" && auto.value !== ""){
+
+				USER = auto.value;
+	}
+
+    $("#user").html(USER);
+
+    SC.get("/groups/?permalink="+USER, {limit: 32}).then(function(group){
+    $.post("{%  url 'api_sound_PostGroup' %}",
+            {
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                scID : group.id,
+                name : group.permalink
+            },
+            function (data){
+                if(data.status == 1){
+
+                }
+                else{
+
+                }
+
+            });
+        });
+
+  }
+  myFunction();
+
+</script>
+$("#container")     .html(finalcontainer);
 </html>
