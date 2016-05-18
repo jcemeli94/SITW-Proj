@@ -18,7 +18,7 @@ from urllib2 import Request, urlopen, URLError
 
 #from forms import PostForm #USE FOR FORMULARIES
 
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User as Django_User, Group as Django_Group
 from rest_framework import viewsets
 from .serializer import UserSerializer, GroupSerializer
 
@@ -43,6 +43,7 @@ def ListEntity(request, basename, entityType, entitys):
 
 def ListingHTMLGroups(request):
     entitys = Group.objects.all()
+    print entitys
     return ListEntity(request, "groups", "Group", entitys)
 
 def ListingHTMLPlaylists(request):
@@ -179,15 +180,15 @@ def NewGroupReview(request):
             response = requests.get("http://api.soundcloud.com/groups/?permalink="+formGroup.instance.name\
                                     +"&client_id="+clientKey)
             r = json.loads(response.text)
-            formGroup.instance.scID = r[0]["id"]
+            formGroup.instance.scID = int(r[0]["id"])
+            formGroup.id= int(r[0]["id"])
             post = formGroup.save(commit=False)
             print post
             post.published_date = timezone.now()
             post.save()
-            current = Group.objects.filter(scID= formGroup.instance.scID)
             form.instance.date = datetime.today()
             form.instance.user = request.user
-            form.instance.groupID = current.model
+            form.instance.groupID = post
             post = form.save(commit=False)
             post.published_date = timezone.now()
             post.save()
