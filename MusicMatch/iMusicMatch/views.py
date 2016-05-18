@@ -53,12 +53,8 @@ def ListingHTMLTracks(request):
     return ListEntity(request, "tracks", "Track", entitys)
 
 def ListingHTMLUsers(request):
-    entitys = User.objects.all()
-    return ListEntity(request, "users", "User", entitys)
-
-def ListingHTMLAppUsers(request):
     entitys = App_User.objects.all()
-    return ListEntity(request, "users", "App User", entitys)
+    return ListEntity(request, "users", "User", entitys)
 
 def ListingHTMLPlaylistReviews(request):
     entitys = PlaylistReview.objects.all()
@@ -81,7 +77,7 @@ def ShowSpecificTrack(request, objID):
     return render(request, 'iMusicMatch/ListingHTMLTrack.html', {'trs': trs})
 
 def ShowSpecificUser(request, objID):
-    usrs = User.objects.filter(id=int(objID))
+    usrs = App_User.objects.filter(id=int(objID))
     return render(request, 'iMusicMatch/ListingHTMLUser.html', {'usrs': usrs})
 
 def ShowSpecificPlaylistReview(request, objID):
@@ -111,7 +107,7 @@ def ListingExtensionTracks(request, extension):
     return HttpResponse(data,content_type=contType)
 
 def ListingExtensionUsers(request, extension):
-    data = serializers.serialize(extension, User.objects.all())
+    data = serializers.serialize(extension, App_User.objects.all())
     contType = 'application/', extension
     return HttpResponse(data,content_type=contType)
 
@@ -143,7 +139,7 @@ def ShowSpecificTrackExtension(request, extension, objID):
     return HttpResponse(trs,content_type=contType)
 
 def ShowSpecificUserExtension(request, extension, objID):
-    usrs =serializers.serialize(extension, User.objects.filter(id=int(objID)))
+    usrs =serializers.serialize(extension, App_User.objects.filter(id=int(objID)))
     contType = 'application/', extension
     return HttpResponse(usrs,content_type=contType)
 
@@ -231,7 +227,8 @@ def NewPlaylistReview(request):
                         name = r[0]['tracks'][track]['user']['permalink'].decode('ascii')
                         u = App_User(id=r[0]['tracks'][track]['user']['id'],
                                  scID=r[0]['tracks'][track]['user']['id'],
-                                 name=r[0]['tracks'][track]['user']['permalink'])
+                                 permalink=r[0]['tracks'][track]['user']['permalink'],
+                                 name=r[0]['tracks'][track]['user']['username'])
                         u.save()
                         r[0]['tracks'][track]['title'].decode('ascii')
                         t = Track(
