@@ -204,8 +204,7 @@ def NewPlaylistReview(request):
         formPlaylist = PostFormGroup(request.POST)
         if form.is_valid() and formPlaylist.is_valid():
             try:
-                # post = Playlist.objects.filter(name=formPlaylist.instance.name)[0]
-                raise IndexError
+                post = Playlist.objects.filter(name=formPlaylist.instance.name)[0]
             except IndexError:
                 response = requests.get("http://api.soundcloud.com/playlists/?permalink=" + formPlaylist.instance.name \
                                         + "&client_id=" + clientKey)
