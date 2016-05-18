@@ -200,6 +200,8 @@ def NewGroupReview(request):
 
 @login_required
 def NewPlaylistReview(request):
+    tList = []
+    uList = []
     if request.method == "POST":
         form = PostFormPlaylistReview(request.POST)
         formPlaylist = PostFormGroup(request.POST)
@@ -224,7 +226,7 @@ def NewPlaylistReview(request):
                 post.save()
                 for track in xrange(10):
                     try:
-                        name = r[0]['tracks'][track]['user']['permalink'].decode('ascii')
+                        r[0]['tracks'][track]['user']['permalink'].decode('ascii')
                         u = App_User(id=r[0]['tracks'][track]['user']['id'],
                                  scID=r[0]['tracks'][track]['user']['id'],
                                  permalink=r[0]['tracks'][track]['user']['permalink'],
@@ -238,6 +240,8 @@ def NewPlaylistReview(request):
                             duration=r[0]['tracks'][track]['duration'],
                             owner=u)
                         t.save()
+                        uList.append(u)
+                        tList.append(t)
                     except:
                         print "Error creating"
             form.instance.date = datetime.today()
@@ -246,6 +250,12 @@ def NewPlaylistReview(request):
             post = form.save(commit=False)
             post.published_date = timezone.now()
             post.save()
+            cPlay = Playlist.objects.filter(playlistreview=form.instance)[0]
+            for t in tList:
+                cPlay.trackList.add(t)
+            for u in uList:
+                cPlay.members.add(u)
+
             return redirect('http://127.0.0.1:8000/')  # canviar URL
     else:
         form = PostFormGroupReview()
