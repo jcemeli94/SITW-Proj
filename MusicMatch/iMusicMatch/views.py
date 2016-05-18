@@ -174,15 +174,17 @@ def NewGroupReview(request):
         form = PostFormGroupReview(request.POST)
         formGroup = PostFormGroup(request.POST)
         if form.is_valid() and formGroup.is_valid():
-            response = requests.get("http://api.soundcloud.com/groups/?permalink="+formGroup.instance.name\
-                                    +"&client_id="+clientKey)
-            r = json.loads(response.text)
-            formGroup.instance.scID = int(r[0]["id"])
-            formGroup.id= int(r[0]["id"])
-            post = formGroup.save(commit=False)
-            print post
-            post.published_date = timezone.now()
-            post.save()
+            post = Group.objects.filter(name=formGroup.instance.name)[0]
+            if post == []:
+                response = requests.get("http://api.soundcloud.com/groups/?permalink="+formGroup.instance.name\
+                                        +"&client_id="+clientKey)
+                r = json.loads(response.text)
+                formGroup.instance.scID = int(r[0]["id"])
+                formGroup.id= int(r[0]["id"])
+                post = formGroup.save(commit=False)
+                print post
+                post.published_date = timezone.now()
+                post.save()
             form.instance.date = datetime.today()
             form.instance.user = request.user
             form.instance.groupID = post
@@ -201,15 +203,17 @@ def NewPlaylistReview(request):
         form = PostFormPlaylistReview(request.POST)
         formPlaylist = PostFormGroup(request.POST)
         if form.is_valid() and formPlaylist.is_valid():
-            response = requests.get("http://api.soundcloud.com/playlists/?permalink=" + formPlaylist.instance.name \
-                                    + "&client_id=" + clientKey)
-            r = json.loads(response.text)
-            formPlaylist.instance.scID = int(r[0]["id"])
-            formPlaylist.id = int(r[0]["id"])
-            post = formPlaylist.save(commit=False)
-            print post
-            post.published_date = timezone.now()
-            post.save()
+            post = Playlist.objects.filter(name=formPlaylist.instance.name)[0]
+            if post == []:
+                response = requests.get("http://api.soundcloud.com/playlists/?permalink=" + formPlaylist.instance.name \
+                                        + "&client_id=" + clientKey)
+                r = json.loads(response.text)
+                formPlaylist.instance.scID = int(r[0]["id"])
+                formPlaylist.id = int(r[0]["id"])
+                post = formPlaylist.save(commit=False)
+                print post
+                post.published_date = timezone.now()
+                post.save()
             form.instance.date = datetime.today()
             form.instance.user = request.user
             form.instance.playlistID = post
