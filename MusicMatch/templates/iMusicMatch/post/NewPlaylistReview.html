@@ -40,6 +40,7 @@
     {% block content %}
         <p class = "serif"> New Playlist Review data</p>
         <form method="POST" class="post-form">{% csrf_token %}
+            {{ formPlaylist.as_p }}
             {{ form.as_p }}
             <div class="ui-widget">
 

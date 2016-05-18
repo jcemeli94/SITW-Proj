@@ -12,9 +12,6 @@ from datetime import *
 import json
 
 import requests
-import soundcloud
-
-from urllib2 import Request, urlopen, URLError
 
 #from forms import PostForm #USE FOR FORMULARIES
 
@@ -202,16 +199,28 @@ def NewGroupReview(request):
 def NewPlaylistReview(request):
     if request.method == "POST":
         form = PostFormPlaylistReview(request.POST)
-        if form.is_valid():
+        formPlaylist = PostFormGroup(request.POST)
+        if form.is_valid() and formPlaylist.is_valid():
+            response = requests.get("http://api.soundcloud.com/playlists/?permalink=" + formPlaylist.instance.name \
+                                    + "&client_id=" + clientKey)
+            r = json.loads(response.text)
+            formPlaylist.instance.scID = int(r[0]["id"])
+            formPlaylist.id = int(r[0]["id"])
+            post = formPlaylist.save(commit=False)
+            print post
+            post.published_date = timezone.now()
+            post.save()
             form.instance.date = datetime.today()
             form.instance.user = request.user
+            form.instance.playlistID = post
             post = form.save(commit=False)
             post.published_date = timezone.now()
             post.save()
-            return redirect('http://127.0.0.1:8000/') #canviar URL
+            return redirect('http://127.0.0.1:8000/')  # canviar URL
     else:
-        form = PostFormPlaylistReview()
-    return render(request, 'iMusicMatch/post/NewGroupReview.html', {'form': form})
+        form = PostFormGroupReview()
+        formPlaylist = PostFormGroup()
+    return render(request, 'iMusicMatch/post/NewPlaylistReview.html', {'form': form, 'formPlaylist': formPlaylist})
 
 @login_required
 def DeleteGroupReview(request, rest_pk):

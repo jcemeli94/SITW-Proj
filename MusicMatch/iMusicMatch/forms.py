@@ -7,6 +7,11 @@ class PostFormGroup(forms.ModelForm):
         model = Group
         fields = ('name',)
 
+class PostFormGroup(forms.ModelForm):
+    class Meta:
+        model = Playlist
+        fields = ('name',)
+
 class PostFormGroupReview(forms.ModelForm):
 
     class Meta:
@@ -17,7 +22,7 @@ class PostFormPlaylistReview(forms.ModelForm):
 
     class Meta:
         model = PlaylistReview
-        fields = ('playlistID','review',)
+        fields = ('review',)
 
 class PostForm(forms.ModelForm):
 
