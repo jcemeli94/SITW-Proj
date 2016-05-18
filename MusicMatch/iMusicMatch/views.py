@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.shortcuts import redirect
 from forms import *
 from django.contrib.auth.models import User as Django_User, Group as Django_Group
+from .models import User as App_User
 from .models import *
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
@@ -54,6 +55,10 @@ def ListingHTMLTracks(request):
 def ListingHTMLUsers(request):
     entitys = User.objects.all()
     return ListEntity(request, "users", "User", entitys)
+
+def ListingHTMLAppUsers(request):
+    entitys = App_User.objects.all()
+    return ListEntity(request, "users", "App User", entitys)
 
 def ListingHTMLPlaylistReviews(request):
     entitys = PlaylistReview.objects.all()
@@ -223,12 +228,18 @@ def NewPlaylistReview(request):
                 post.save()
                 for track in xrange(10):
                     try:
+                        name = r[0]['tracks'][track]['user']['permalink'].decode('ascii')
+                        u = App_User(id=r[0]['tracks'][track]['user']['id'],
+                                 scID=r[0]['tracks'][track]['user']['id'],
+                                 name=r[0]['tracks'][track]['user']['permalink'])
+                        u.save()
                         r[0]['tracks'][track]['title'].decode('ascii')
                         t = Track(
                             id=r[0]['tracks'][track]['id'],
                             scID=r[0]['tracks'][track]['id'],
                             name=r[0]['tracks'][track]['title'],
-                            duration=r[0]['tracks'][track]['duration'])
+                            duration=r[0]['tracks'][track]['duration'],
+                            owner=u)
                         t.save()
                     except:
                         print "Error creating"
