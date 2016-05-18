@@ -4,10 +4,12 @@ from django.http import *
 from django.utils import timezone
 from django.shortcuts import redirect
 from forms import *
+from django.contrib.auth.models import User as Django_User, Group as Django_Group
 from .models import *
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from datetime import *
+import json
 
 import requests
 import soundcloud
@@ -170,21 +172,25 @@ def NewGroup(request):
 
 @login_required
 def NewGroupReview(request):
-    sClient = soundcloud.Client(client_id=clientKey)
     if request.method == "POST":
         form = PostFormGroupReview(request.POST)
         formGroup = PostFormGroup(request.POST)
         if form.is_valid() and formGroup.is_valid():
-            response = requests.get("http://api.soundcloud.com/groups/?permalink="\
-                                    +formGroup.instance.name+"?client_id="+clientKey, sClient)
-
-            print "Here"
-            print response
+            response = requests.get("http://api.soundcloud.com/groups/?permalink="+formGroup.instance.name\
+                                    +"&client_id="+clientKey)
+            r = json.loads(response.text)
+            formGroup.instance.scID = r[0]["id"]
+            post = formGroup.save(commit=False)
+            print post
+            post.published_date = timezone.now()
+            post.save()
+            current = Group.objects.filter(scID= formGroup.instance.scID)
             form.instance.date = datetime.today()
             form.instance.user = request.user
+            form.instance.groupID = current.model
             post = form.save(commit=False)
             post.published_date = timezone.now()
-            # post.save()
+            post.save()
             return redirect('http://127.0.0.1:8000/') #canviar URL
     else:
         form = PostFormGroupReview()
