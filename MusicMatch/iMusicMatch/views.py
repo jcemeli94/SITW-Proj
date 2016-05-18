@@ -18,7 +18,7 @@ from urllib2 import Request, urlopen, URLError
 
 #from forms import PostForm #USE FOR FORMULARIES
 
-from django.contrib.auth.models import User as Django_User, Group as Django_Group
+from django.contrib.auth.models import User, Group as Django_Group
 from rest_framework import viewsets
 from .serializer import UserSerializer, GroupSerializer
 
