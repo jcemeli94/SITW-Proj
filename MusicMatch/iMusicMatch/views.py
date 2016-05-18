@@ -8,11 +8,19 @@ from .models import *
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from datetime import *
+
+import requests
+import soundcloud
+
+from urllib2 import Request, urlopen, URLError
+
 #from forms import PostForm #USE FOR FORMULARIES
 
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from .serializer import UserSerializer, GroupSerializer
+
+clientKey = "887b335a80f3e625454ebca548c53d96"
 
 def mainpage(request):
     return render(request, 'iMusicMatch/mainPage.html')
@@ -162,18 +170,26 @@ def NewGroup(request):
 
 @login_required
 def NewGroupReview(request):
+    sClient = soundcloud.Client(client_id=clientKey)
     if request.method == "POST":
         form = PostFormGroupReview(request.POST)
-        if form.is_valid():
+        formGroup = PostFormGroup(request.POST)
+        if form.is_valid() and formGroup.is_valid():
+            response = requests.get("http://api.soundcloud.com/groups/?permalink="\
+                                    +formGroup.instance.name+"?client_id="+clientKey, sClient)
+
+            print "Here"
+            print response
             form.instance.date = datetime.today()
             form.instance.user = request.user
             post = form.save(commit=False)
             post.published_date = timezone.now()
-            post.save()
+            # post.save()
             return redirect('http://127.0.0.1:8000/') #canviar URL
     else:
         form = PostFormGroupReview()
-    return render(request, 'iMusicMatch/post/NewGroupReview.html', {'form': form})
+        formGroup = PostFormGroup()
+    return render(request, 'iMusicMatch/post/NewGroupReview.html', {'form': form, 'formGroup' : formGroup})
 
 @login_required
 def NewPlaylistReview(request):

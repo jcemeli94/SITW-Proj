@@ -56,6 +56,7 @@
     {% block content %}
         <p class = "serif"> New Group Review data</p>
         <form method="POST" class="post-form">{% csrf_token %}
+            {{ formGroup.as_p }}
             {{ form.as_p }}
 
             <label for="lan">Language: </label>

@@ -1,12 +1,17 @@
 from django import forms
-from django.contrib.auth.models import User as Django_User
 from .models import *
+from django.contrib.auth.models import User as Django_User, Group as Django_group
+
+class PostFormGroup(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields = ('name',)
 
 class PostFormGroupReview(forms.ModelForm):
 
     class Meta:
         model = GroupReview
-        fields = ('groupID','review',)
+        fields = ('review',)
 
 class PostFormPlaylistReview(forms.ModelForm):
 
