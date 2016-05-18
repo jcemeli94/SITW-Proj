@@ -29,7 +29,7 @@ class Track(models.Model):
     scID = models.IntegerField()
     name = models.CharField(max_length=100)
     duration = models.IntegerField() #Time in seconds
-    owner = models.ForeignKey(User)
+    owner = models.ForeignKey(User, null=True)
 
     def __unicode__(self):
         return "{0}, {1}".format(self.scID, self.name)

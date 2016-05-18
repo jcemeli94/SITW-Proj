@@ -203,17 +203,36 @@ def NewPlaylistReview(request):
         form = PostFormPlaylistReview(request.POST)
         formPlaylist = PostFormGroup(request.POST)
         if form.is_valid() and formPlaylist.is_valid():
-            post = Playlist.objects.filter(name=formPlaylist.instance.name)[0]
-            if post == []:
+            try:
+                # post = Playlist.objects.filter(name=formPlaylist.instance.name)[0]
+                raise IndexError
+            except IndexError:
                 response = requests.get("http://api.soundcloud.com/playlists/?permalink=" + formPlaylist.instance.name \
                                         + "&client_id=" + clientKey)
                 r = json.loads(response.text)
+                try:
+                    print r[0]['tracks']
+                    print r[0]['tracks'][0]['title']
+                    print r[0]['tracks'][0]['id']
+                except:
+                    print "Out of range"
                 formPlaylist.instance.scID = int(r[0]["id"])
                 formPlaylist.id = int(r[0]["id"])
                 post = formPlaylist.save(commit=False)
                 print post
                 post.published_date = timezone.now()
                 post.save()
+                for track in xrange(10):
+                    try:
+                        r[0]['tracks'][track]['title'].decode('ascii')
+                        t = Track(
+                            id=r[0]['tracks'][track]['id'],
+                            scID=r[0]['tracks'][track]['id'],
+                            name=r[0]['tracks'][track]['title'],
+                            duration=r[0]['tracks'][track]['duration'])
+                        t.save()
+                    except:
+                        print "Error creating"
             form.instance.date = datetime.today()
             form.instance.user = request.user
             form.instance.playlistID = post

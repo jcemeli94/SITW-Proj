@@ -24,6 +24,12 @@ class PostFormPlaylistReview(forms.ModelForm):
         model = PlaylistReview
         fields = ('review',)
 
+class PostFormTrack(forms.ModelForm):
+
+    class Meta:
+        model = Track
+        fields = ()
+
 class PostForm(forms.ModelForm):
 
     class Meta:
