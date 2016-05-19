@@ -471,6 +471,56 @@ class GroupsApiDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
+class PlaylistsApiList(generics.ListCreateAPIView):
+    model = Playlist
+    queryset = Playlist.objects.all()
+    serializer_class = PlaylistSerializer
+
+class PlaylistsApiDetail(generics.RetrieveUpdateDestroyAPIView):
+    model = Playlist
+    queryset = Playlist.objects.all()
+    serializer_class = PlaylistSerializer
+
+class UsersApiList(generics.ListCreateAPIView):
+    model = App_User
+    queryset = App_User.objects.all()
+    serializer_class = UserSerializer
+
+class UsersApiDetail(generics.RetrieveUpdateDestroyAPIView):
+    model = App_User
+    queryset = App_User.objects.all()
+    serializer_class = UserSerializer
+
+class TracksApiList(generics.ListCreateAPIView):
+    model = Track
+    queryset = Track.objects.all()
+    serializer_class = TrackSerializer
+
+class TracksApiDetail(generics.RetrieveUpdateDestroyAPIView):
+    model = Track
+    queryset = Track.objects.all()
+    serializer_class = TrackSerializer
+
+class PlaylistReviewsApiList(generics.ListCreateAPIView):
+    model = PlaylistReview
+    queryset = PlaylistReview.objects.all()
+    serializer_class = PlaylistReviewSerializer
+
+class PlaylistReviewsApiDetail(generics.RetrieveUpdateDestroyAPIView):
+    model = PlaylistReview
+    queryset = PlaylistReview.objects.all()
+    serializer_class = PlaylistReviewSerializer
+
+class GroupReviewsApiList(generics.ListCreateAPIView):
+    model = GroupReview
+    queryset = GroupReview.objects.all()
+    serializer_class = GroupReviewSerializer
+
+class GroupReviewsApiDetail(generics.RetrieveUpdateDestroyAPIView):
+    model = GroupReview
+    queryset = GroupReview.objects.all()
+    serializer_class = PlaylistReviewSerializer
+
 #Tests
 
 # def ListEntity(request, entity, extension):
