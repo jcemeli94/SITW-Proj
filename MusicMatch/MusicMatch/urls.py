@@ -22,6 +22,8 @@ from django.conf.urls import url, include
 from rest_framework import routers
 from iMusicMatch import views
 
+from restDir import views_api, serializers
+
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
@@ -30,6 +32,13 @@ router.register(r'groups', views.GroupViewSet)
 entityList = ["groups", "playlists", "tracks", "users", "playlistreviews", "groupreviews"]
 
 urlpatterns = [
+
+    url(r'^api/$', include(router.urls)),
+    url(r'^api/groups/$',
+        views.GroupsApiList.as_view(), name="group-list"),
+    url(r'^api/groups/(?P<pk>\d+)/$',
+        GroupsApiDetail.as_view(), name="group-detail"),
+
     url(r'^$', mainpage),
     url(r'^admin/', include(admin.site.urls)),
 

@@ -12,6 +12,13 @@ from django.contrib.auth.decorators import login_required
 from datetime import *
 import json
 
+from rest_framework import generics
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
+
+from restDir.serializers import *
+
 import requests
 
 #from forms import PostForm #USE FOR FORMULARIES
@@ -451,6 +458,18 @@ class GroupViewSet(viewsets.ModelViewSet):
 def logout(request):
     auth_logout(request)
     return HttpResponseRedirect('/')
+
+#API
+
+class GroupsApiList(generics.ListCreateAPIView):
+    model = Group
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+
+class GroupsApiDetail(generics.RetrieveUpdateDestroyAPIView):
+    model = Group
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
 
 #Tests
 
