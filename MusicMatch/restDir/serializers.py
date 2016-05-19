@@ -4,11 +4,11 @@ from django.contrib.auth.models import User as Django_User
 from iMusicMatch.models import *
 
 
-class GroupSerializer(serializers.HyperlinkedModelSerializer):
+class GroupSerializerAPI(serializers.HyperlinkedModelSerializer):
     scID = serializers.IntegerField()  # ID used in SoundCloud API
     name = serializers.CharField(max_length=100)
     userList = serializers.SerializerMethodField('get_userlist')
-    tracks = serializers.SerializerMethodField('get_tracks')
+    tracks = serializers.SerializerMethodField('get_tracklist')
 
 
     def get_userlist(self, group):
@@ -16,6 +16,13 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         for user in User.objects.filter(group=group).order_by('id'):
             userlist.append("http://127.0.0.1:8000/api/users/" + str(user.id))
         return userlist
+
+    def get_tracklist(self, group):
+        tracklist = []
+        for track in Track.objects.filter(group=group).order_by('id'):
+            tracklist.append("http://127.0.0.1:8000/api/tracks/" + str(track.id))
+        return tracklist
+
     class Meta:
         model = Group
 
@@ -34,13 +41,13 @@ class PlaylistSerializer(serializers.HyperlinkedModelSerializer):
     def get_tracklist(self, group):
         tracklist = []
         for track in Track.objects.filter(playlist=group).order_by('id'):
-            tracklist.append("http://127.0.0.1:8000/api/users/" + str(track.id))
+            tracklist.append("http://127.0.0.1:8000/api/tracks/" + str(track.id))
         return tracklist
 
     class Meta:
         model = Playlist
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializerAPI(serializers.HyperlinkedModelSerializer):
     scID = serializers.IntegerField()
     permalink = serializers.CharField(max_length=100)
     name = serializers.CharField(max_length=100)
@@ -83,7 +90,7 @@ class GroupReviewSerializer(serializers.HyperlinkedModelSerializer):
     #     return "http://127.0.0.1:8000/api/users/" + str(Django_User.objects.filter(group=group).order_by('id')[0].id)
 
     def get_play(self, group):
-        return "http://127.0.0.1:8000/api/playlists/" + str(Django_User.objects.filter(groupreview=group).order_by('id')[0].id)
+        return "http://127.0.0.1:8000/api/groups/" + str(Django_User.objects.filter(groupreview=group).order_by('id')[0].id)
     class Meta:
         model = GroupReview
 

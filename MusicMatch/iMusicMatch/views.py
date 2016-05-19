@@ -17,6 +17,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 
+from serializer import *
 from restDir.serializers import *
 
 import requests
@@ -464,12 +465,12 @@ def logout(request):
 class GroupsApiList(generics.ListCreateAPIView):
     model = Group
     queryset = Group.objects.all()
-    serializer_class = GroupSerializer
+    serializer_class = GroupSerializerAPI
 
 class GroupsApiDetail(generics.RetrieveUpdateDestroyAPIView):
     model = Group
     queryset = Group.objects.all()
-    serializer_class = GroupSerializer
+    serializer_class = GroupSerializerAPI
 
 class PlaylistsApiList(generics.ListCreateAPIView):
     model = Playlist
@@ -484,12 +485,12 @@ class PlaylistsApiDetail(generics.RetrieveUpdateDestroyAPIView):
 class UsersApiList(generics.ListCreateAPIView):
     model = App_User
     queryset = App_User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserSerializerAPI
 
 class UsersApiDetail(generics.RetrieveUpdateDestroyAPIView):
     model = App_User
     queryset = App_User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserSerializerAPI
 
 class TracksApiList(generics.ListCreateAPIView):
     model = Track
