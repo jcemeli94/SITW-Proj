@@ -171,6 +171,8 @@ def NewGroup(request):
 
 @login_required
 def NewGroupReview(request):
+    tList =[]
+    uList = []
     if request.method == "POST":
         form = PostFormGroupReview(request.POST)
         formGroup = PostFormGroup(request.POST)
@@ -186,6 +188,49 @@ def NewGroupReview(request):
             print post
             post.published_date = timezone.now()
             post.save()
+            for user in xrange(10):
+                try:
+                    r[0]['users'][user]['permalink'].decode('ascii')
+                    r[0]['users'][user]['username'].decode('ascii')
+                    try:
+                        u=App_User.objects.filter(permalink=r[0]['users'][user]['permalink'].decode('ascii'))[0]
+                    except:
+                        u = App_User(id=r[0]['users'][user]['id'],
+                                     scID=r[0]['users'][user]['id'],
+                                     permalink=r[0]['users'][user]['permalink'],
+                                     name=r[0]['users'][user]['username'])
+                        u.save()
+                    uList.append(u)
+                except:
+                    print "Error creating user"
+
+
+            for track in xrange(10):
+                try:
+                    try:
+                        u=App_User.objects.filter(permalink=r[0]['tracks'][track]['user']['permalink'])[0]
+                    except:
+                        r[0]['tracks'][track]['user']['permalink'].decode('ascii')
+                        r[0]['tracks'][track]['user']['username'].decode('ascii')
+                        u = App_User(id=r[0]['tracks'][track]['user']['id'],
+                                     scID=r[0]['tracks'][track]['user']['id'],
+                                     permalink=r[0]['tracks'][track]['user']['permalink'],
+                                     name=r[0]['tracks'][track]['user']['username'])
+                        u.save()
+                    r[0]['tracks'][track]['title'].decode('ascii')
+                    try:
+                        t=Track.objects.filter(scID=r[0]['tracks'][track]['id'])[0]
+                    except:
+                        t = Track(
+                            id=r[0]['tracks'][track]['id'],
+                            scID=r[0]['tracks'][track]['id'],
+                            name=r[0]['tracks'][track]['title'],
+                            duration=r[0]['tracks'][track]['duration'],
+                            owner=u)
+                        t.save()
+                    tList.append(t)
+                except:
+                    print "Error creating"
         form.instance.date = datetime.today()
         form.instance.user = request.user
         try:
@@ -195,7 +240,12 @@ def NewGroupReview(request):
         post = form.save(commit=False)
         post.published_date = timezone.now()
         post.save()
-        return redirect('http://127.0.0.1:8000/') #canviar URL
+        cPlay = Group.objects.filter(groupreview=form.instance)[0]
+        for t in tList:
+            cPlay.trackList.add(t)
+        for u in uList:
+            cPlay.members.add(u)
+        return redirect('http://127.0.0.1:8000/')  # canviar URL
     else:
         form = PostFormGroupReview()
         formGroup = PostFormGroup()
@@ -229,21 +279,27 @@ def NewPlaylistReview(request):
                 post.save()
                 for track in xrange(10):
                     try:
-                        r[0]['tracks'][track]['user']['permalink'].decode('ascii')
-                        u = App_User(id=r[0]['tracks'][track]['user']['id'],
-                                 scID=r[0]['tracks'][track]['user']['id'],
-                                 permalink=r[0]['tracks'][track]['user']['permalink'],
-                                 name=r[0]['tracks'][track]['user']['username'])
-                        u.save()
+                        try:
+                            u = App_User.objects.filter(permalink=r[0]['tracks'][track]['user']['permalink'])[0]
+                        except:
+                            r[0]['tracks'][track]['user']['permalink'].decode('ascii')
+                            r[0]['tracks'][track]['user']['username'].decode('ascii')
+                            u = App_User(id=r[0]['tracks'][track]['user']['id'],
+                                         scID=r[0]['tracks'][track]['user']['id'],
+                                         permalink=r[0]['tracks'][track]['user']['permalink'],
+                                         name=r[0]['tracks'][track]['user']['username'])
+                            u.save()
                         r[0]['tracks'][track]['title'].decode('ascii')
-                        t = Track(
-                            id=r[0]['tracks'][track]['id'],
-                            scID=r[0]['tracks'][track]['id'],
-                            name=r[0]['tracks'][track]['title'],
-                            duration=r[0]['tracks'][track]['duration'],
-                            owner=u)
-                        t.save()
-                        uList.append(u)
+                        try:
+                            t = Track.objects.filter(scID=r[0]['tracks'][track]['id'])[0]
+                        except:
+                            t = Track(
+                                id=r[0]['tracks'][track]['id'],
+                                scID=r[0]['tracks'][track]['id'],
+                                name=r[0]['tracks'][track]['title'],
+                                duration=r[0]['tracks'][track]['duration'],
+                                owner=u)
+                            t.save()
                         tList.append(t)
                     except:
                         print "Error creating"
