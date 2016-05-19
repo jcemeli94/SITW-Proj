@@ -7,7 +7,7 @@ class PostFormGroup(forms.ModelForm):
         model = Group
         fields = ('name',)
 
-class PostFormGroup(forms.ModelForm):
+class PostFormPlaylist(forms.ModelForm):
     class Meta:
         model = Playlist
         fields = ('name',)

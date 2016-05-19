@@ -174,25 +174,28 @@ def NewGroupReview(request):
     if request.method == "POST":
         form = PostFormGroupReview(request.POST)
         formGroup = PostFormGroup(request.POST)
-        if form.is_valid() and formGroup.is_valid():
+        try:
             post = Group.objects.filter(name=formGroup.instance.name)[0]
-            if post == []:
-                response = requests.get("http://api.soundcloud.com/groups/?permalink="+formGroup.instance.name\
+        except:
+            response = requests.get("http://api.soundcloud.com/groups/?permalink="+formGroup.instance.name\
                                         +"&client_id="+clientKey)
-                r = json.loads(response.text)
-                formGroup.instance.scID = int(r[0]["id"])
-                formGroup.id= int(r[0]["id"])
-                post = formGroup.save(commit=False)
-                print post
-                post.published_date = timezone.now()
-                post.save()
-            form.instance.date = datetime.today()
-            form.instance.user = request.user
-            form.instance.groupID = post
-            post = form.save(commit=False)
+            r = json.loads(response.text)
+            formGroup.instance.scID = int(r[0]["id"])
+            formGroup.id= int(r[0]["id"])
+            post = formGroup.save(commit=False)
+            print post
             post.published_date = timezone.now()
             post.save()
-            return redirect('http://127.0.0.1:8000/') #canviar URL
+        form.instance.date = datetime.today()
+        form.instance.user = request.user
+        try:
+            form.instance.groupID = post
+        except:
+            form.instance.groupID = post.instance
+        post = form.save(commit=False)
+        post.published_date = timezone.now()
+        post.save()
+        return redirect('http://127.0.0.1:8000/') #canviar URL
     else:
         form = PostFormGroupReview()
         formGroup = PostFormGroup()
@@ -204,7 +207,7 @@ def NewPlaylistReview(request):
     uList = []
     if request.method == "POST":
         form = PostFormPlaylistReview(request.POST)
-        formPlaylist = PostFormGroup(request.POST)
+        formPlaylist = PostFormPlaylist(request.POST)
         if form.is_valid() and formPlaylist.is_valid():
             try:
                 post = Playlist.objects.filter(name=formPlaylist.instance.name)[0]
@@ -246,7 +249,10 @@ def NewPlaylistReview(request):
                         print "Error creating"
             form.instance.date = datetime.today()
             form.instance.user = request.user
-            form.instance.playlistID = post
+            try:
+                form.instance.playlistID = post
+            except:
+                form.instance.playlistID = post.instance
             post = form.save(commit=False)
             post.published_date = timezone.now()
             post.save()
@@ -258,8 +264,8 @@ def NewPlaylistReview(request):
 
             return redirect('http://127.0.0.1:8000/')  # canviar URL
     else:
-        form = PostFormGroupReview()
-        formPlaylist = PostFormGroup()
+        form = PostFormPlaylistReview()
+        formPlaylist = PostFormPlaylist()
     return render(request, 'iMusicMatch/post/NewPlaylistReview.html', {'form': form, 'formPlaylist': formPlaylist})
 
 @login_required
