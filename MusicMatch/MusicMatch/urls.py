@@ -50,7 +50,7 @@ urlpatterns = [
     url(r'^playlists.(?P<extension>["xml"|"json"]+)/$', views.ListingExtensionPlaylists, name='playlist_list'),
     url(r'^tracks.(?P<extension>["xml"|"json"]+)/$', views.ListingExtensionTracks, name='track_list'),
     url(r'^users.(?P<extension>["xml"|"json"]+)/$', views.ListingExtensionUsers, name='user_list'),
-    url(r'^playlistreview.(?P<extension>["xml"|"json"]+)/$', views.ListingExtensionPlaylistReviews, name='playlistreview_list'),
+    url(r'^playlistreviews.(?P<extension>["xml"|"json"]+)/$', views.ListingExtensionPlaylistReviews, name='playlistreview_list'),
     url(r'^groupreviews.(?P<extension>["xml"|"json"]+)/$', views.ListingExtensionGroupReviews, name='groupreview_list'),
 
     url(r'^groups.(?P<extension>["xml"|"json"]+)/(?P<objID>[0-9]+)',    views.ShowSpecificGroupExtension,    name='group_detail'),
