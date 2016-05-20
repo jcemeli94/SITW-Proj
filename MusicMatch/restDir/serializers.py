@@ -1,6 +1,4 @@
-import collections
 from rest_framework import serializers
-from django.contrib.auth.models import User as Django_User
 from iMusicMatch.models import *
 
 
@@ -93,22 +91,3 @@ class GroupReviewSerializer(serializers.HyperlinkedModelSerializer):
         return "http://127.0.0.1:8000/api/groups/" + str(Django_User.objects.filter(groupreview=group).order_by('id')[0].id)
     class Meta:
         model = GroupReview
-
-# class AlbumSerializer(serializers.HyperlinkedModelSerializer):
-#     tracks = serializers.SerializerMethodField('get_album_tracks')
-#
-#     def get_album_tracks(self, album):
-#         album_tracks = collections.OrderedDict()
-#         num_track = 1
-#         for track in Track.objects.filter(album=album):
-#             track_url = "http://127.0.0.1:8000/mymusic/api/tracks/" + str(track.id)
-#             album_tracks[str(num_track)] = track_url
-#             num_track += 1
-#         return album_tracks
-#
-#     class Meta:
-#         model = Album
-#
-# class TrackSerializer(serializers.HyperlinkedModelSerializer):
-#     class Meta:
-#         model = Track

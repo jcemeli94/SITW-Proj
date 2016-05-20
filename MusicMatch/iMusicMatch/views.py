@@ -1,30 +1,22 @@
 from django.shortcuts import *
-from django.core import serializers
+from django.core.serializers import serialize
 from django.http import *
 from django.utils import timezone
 from django.shortcuts import redirect
 from forms import *
-from django.contrib.auth.models import User as Django_User, Group as Django_Group
 from .models import User as App_User
-from .models import *
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from datetime import *
 import json
 
 from rest_framework import generics
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework.reverse import reverse
-
-from serializer import *
 from restDir.serializers import *
 
 import requests
 
-#from forms import PostForm #USE FOR FORMULARIES
 
-from django.contrib.auth.models import User, Group as Django_Group
+from django.contrib.auth.models import User
 from rest_framework import viewsets
 from .serializer import UserSerializer, GroupSerializer
 
@@ -100,82 +92,70 @@ def ShowSpecificGroupReview(request, objID):
 # XML
 
 def ListingExtensionGroups(request, extension):
-    data = serializers.serialize(extension, Group.objects.all())
+    data = serialize(extension, Group.objects.all())
     contType = 'application/', extension
     return HttpResponse(data,content_type=contType)
 
 def ListingExtensionPlaylists(request, extension):
-    data = serializers.serialize(extension, Playlist.objects.all())
+    data = serialize(extension, Playlist.objects.all())
     contType = 'application/', extension
     return HttpResponse(data,content_type=contType)
 
 def ListingExtensionTracks(request, extension):
-    data = serializers.serialize(extension, Track.objects.all())
+    data = serialize(extension, Track.objects.all())
     contType = 'application/', extension
     return HttpResponse(data,content_type=contType)
 
 def ListingExtensionUsers(request, extension):
-    data = serializers.serialize(extension, App_User.objects.all())
+    data = serialize(extension, App_User.objects.all())
     contType = 'application/', extension
     return HttpResponse(data,content_type=contType)
 
 def ListingExtensionPlaylistReviews(request, extension):
-    data = serializers.serialize(extension, PlaylistReview.objects.all())
+    data = serialize(extension, PlaylistReview.objects.all())
     contType = 'application/', extension
     return HttpResponse(data,content_type=contType)
 
 def ListingExtensionGroupReviews(request, extension):
-    data = serializers.serialize(extension, Group.objects.all())
+    data = serialize(extension, Group.objects.all())
     contType = 'application/', extension
     return HttpResponse(data,content_type=contType)
 
 
 
 def ShowSpecificGroupExtension(request, extension, objID):
-    gps =serializers.serialize(extension, Group.objects.filter(id=int(objID)))
+    gps =serialize(extension, Group.objects.filter(id=int(objID)))
     contType = 'application/', extension
     return HttpResponse(gps,content_type=contType)
 
 def ShowSpecificPlaylistExtension(request, extension, objID):
-    playl =serializers.serialize(extension, Playlist.objects.filter(id=int(objID)))
+    playl =serialize(extension, Playlist.objects.filter(id=int(objID)))
     contType = 'application/', extension
     return HttpResponse(playl,content_type=contType)
 
 def ShowSpecificTrackExtension(request, extension, objID):
-    trs = serializers.serialize(extension, Track.objects.filter(id=int(objID)))
+    trs = serialize(extension, Track.objects.filter(id=int(objID)))
     contType = 'application/', extension
     return HttpResponse(trs,content_type=contType)
 
 def ShowSpecificUserExtension(request, extension, objID):
-    usrs =serializers.serialize(extension, App_User.objects.filter(id=int(objID)))
+    usrs =serialize(extension, App_User.objects.filter(id=int(objID)))
     contType = 'application/', extension
     return HttpResponse(usrs,content_type=contType)
 
 def ShowSpecificPlaylistReviewExtension(request, extension, objID):
-    rvs =serializers.serialize(extension, PlaylistReview.objects.filter(id=int(objID)))
+    rvs =serialize(extension, PlaylistReview.objects.filter(id=int(objID)))
     contType = 'application/', extension
     return HttpResponse(rvs,content_type=contType)
 
 def ShowSpecificGroupReviewExtension(request, extension, objID):
-    rvs =serializers.serialize(extension, GroupReview.objects.filter(id=int(objID)))
+    rvs =serialize(extension, GroupReview.objects.filter(id=int(objID)))
     contType = 'application/', extension
     return HttpResponse(rvs,content_type=contType)
 
 
 
 #Inserts
-
-def NewGroup(request):
-    if request.method == "POST":
-        form = PostForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.published_date = timezone.now()
-            post.save()
-            return redirect('http://127.0.0.1:8000/') #canviar URL
-    else:
-        form = PostForm()
-    return render(request, 'iMusicMatch/post/NewGroup.html', {'form': form})
 
 @login_required
 def NewGroupReview(request):
@@ -521,16 +501,3 @@ class GroupReviewsApiDetail(generics.RetrieveUpdateDestroyAPIView):
     model = GroupReview
     queryset = GroupReview.objects.all()
     serializer_class = PlaylistReviewSerializer
-
-#Tests
-
-# def ListEntity(request, entity, extension):
-#     print entity
-#     entity = entity[:-1]
-#     entity = entity.capitalize()
-#     print entity
-#     print extension
-#     data = serializers.serialize(extension, eval(entity).objects.all())
-#     print data
-#     contType = 'application/', extension
-#     return HttpResponse(data, content_type=contType)

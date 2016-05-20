@@ -87,7 +87,6 @@ urlpatterns = [
     url(r'^playlistreviews.(?P<extension>["xml"|"json"]+)/(?P<objID>[0-9]+)',  views.ShowSpecificPlaylistReviewExtension, name='playlistreview_detail'),
     url(r'^groupreviews.(?P<extension>["xml"|"json"]+)/(?P<objID>[0-9]+)',     views.ShowSpecificGroupReviewExtension,    name='groupreview_detail'),
 
-    url(r'^post/new_group/$', views.NewGroup, name='new_group'),
     url(r'^post/new_group_review/$', views.NewGroupReview, name='new_group_review'),
     url(r'^post/new_playlist_review/$', views.NewPlaylistReview, name = 'new_playlist_review'),
     url(r'^edit_playlist_review/(?P<rest_pk>\d+)/$', views.EditPlaylistReview, name='edit_playlist_review'),
@@ -106,9 +105,3 @@ urlpatterns = [
     url(r'^api_soundcloud_userHeuristic/$', views.api_soundcloud_userHeuristic, name='api_soundcloud_userHeuristic'),
 
 ]
-
-#Insert
-
-
-#Tests
-# url(r'^(?P<entity>["groups"|"playlists"|"tracks"|"users"|"playlistreviews"|"groupreviews"]+).(?P<extension>["xml"|"json"]+)/$', views.ListEntity, name='get_entity'),
