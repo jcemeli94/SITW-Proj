@@ -30,7 +30,7 @@ typeof="MusicPlaylist">
                 <span property="additionalType" value="Users" ></span>
                  <span property="description" value="This item List represents a list of Users"></span>
                 <span property="itemListOrder" content="ID"></span>
-                <span property="numberOfItems" value={{ pl.members.all }}></span>
+                <span property="numberOfItems" value={{ pl.members.all.count }}></span>
 
                 <p>Users: {%  for user in pl.members.all %}
                     <li><span property="itemListElement" >{{ user }}</span>
@@ -42,7 +42,7 @@ typeof="MusicPlaylist">
                <span property="additionalType" value="Tracks" ></span>
                 <span property="description" value="This item List represents a list of Tracks"></span>
                 <span property="itemListOrder" content="Unordered"></span>
-                <span property="numberOfItems" value="{{  pl.trackList.all }}" ></span>
+                <span property="numberOfItems" value="{{  pl.trackList.all.count }}" ></span>
 
                 <p>Tracklist: {%  for track in pl.trackList.all %}
                     <li><span property="itemListElement" >{{ track }}</span>
