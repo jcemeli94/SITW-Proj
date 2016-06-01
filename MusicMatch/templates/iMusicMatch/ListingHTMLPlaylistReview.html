@@ -28,7 +28,7 @@ typeof="Review">
                 <p typeof="AggregateRating" >
 
                     <span property="ratingCount" content="1"></span>
-                    <span property="ratingValue" value="3"></span>
+                    <span property="ratingValue" value=rv.rating></span>
 
                 </p>
             </span>
@@ -40,6 +40,7 @@ typeof="Review">
                      <p>Author name: <b><span property="author">    {{ rv.user.username }}       </span>   </b></p>
                      <p>Date: <b><span property="datePublished">    {{ rv.date }}                </span>   </b></p>
                      <p>Review: <b> <span property="reviewBody">    {{ rv.review }}              </span>   </b></p>
+                     <p>Rating: <b> <span property="rating"> {{ rv.rating }}</span> </b></p>
 
         {% endfor %}
         </body>

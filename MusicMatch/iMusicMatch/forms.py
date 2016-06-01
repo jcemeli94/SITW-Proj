@@ -16,13 +16,13 @@ class PostFormGroupReview(forms.ModelForm):
 
     class Meta:
         model = GroupReview
-        fields = ('review',)
+        fields = ('review','rating')
 
 class PostFormPlaylistReview(forms.ModelForm):
 
     class Meta:
         model = PlaylistReview
-        fields = ('review',)
+        fields = ('review','rating')
 
 class PostFormTrack(forms.ModelForm):
 
@@ -40,13 +40,13 @@ class EditPlaylistReviewForm(forms.ModelForm):
 
     class Meta:
         model = PlaylistReview
-        fields = ('review',)
+        fields = ('review','rating')
 
 class EditGroupReviewForm(forms.ModelForm):
 
     class Meta:
         model = GroupReview
-        fields = ('review',)
+        fields = ('review','rating')
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())

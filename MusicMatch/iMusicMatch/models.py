@@ -4,6 +4,8 @@ from django.db import models
 
 from django.contrib.auth.models import User as Django_User, Group
 
+RATING_CHOICES = ((1, 'one'), (2, 'two'), (3, 'three'), (4, 'four'), (5, 'five'))
+
 class UserProfile(models.Model):
     # This line is required. Links UserProfile to a User model instance.
     user = models.OneToOneField(Django_User)
@@ -57,6 +59,7 @@ class PlaylistReview(models.Model):
     user = models.ForeignKey(Django_User)
     date = models.DateField()
     review = models.CharField(max_length = 1000)
+    rating = models.PositiveSmallIntegerField('Rating (stars)', blank=False, default=3, choices=RATING_CHOICES)
 
     def __unicode__(self):
         return "{0}, {1}, {2}".format(self.id, self.playlistID.name, self.user.username)
@@ -66,6 +69,7 @@ class GroupReview(models.Model):
     user = models.ForeignKey(Django_User)
     date = models.DateField()
     review = models.CharField(max_length = 1000)
+    rating = models.PositiveSmallIntegerField('Rating (stars)', blank=False, default=3, choices=RATING_CHOICES)
 
     def __unicode__(self):
         return "{0}, {1}, {2}".format(self.id, self.groupID.name, self.user.username)
