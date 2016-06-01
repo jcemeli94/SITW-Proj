@@ -500,4 +500,4 @@ class GroupReviewsApiList(generics.ListCreateAPIView):
 class GroupReviewsApiDetail(generics.RetrieveUpdateDestroyAPIView):
     model = GroupReview
     queryset = GroupReview.objects.all()
-    serializer_class = PlaylistReviewSerializer
+    serializer_class = GroupReviewSerializer
