@@ -27,20 +27,16 @@ typeof="Review">
             <span rel="reviewRating" >
                 <p typeof="AggregateRating" >
 
-                    <span property="ratingCount" content="1"></span>
-                    <span property="ratingValue" value=rv.rating></span>
+                    <span property="ratingCount" content="5"></span>
+                     Rating:<span property="ratingValue"> {{ rv.rating }}</span>
 
                 </p>
             </span>
 
-
-
-            <br> </br>
                      <p>SoundCoud ID: <b><span property="itemReviewed" >    {{ rv.playlistID }}  </span>   </b></p>
                      <p>Author name: <b><span property="author">    {{ rv.user.username }}       </span>   </b></p>
                      <p>Date: <b><span property="datePublished">    {{ rv.date }}                </span>   </b></p>
                      <p>Review: <b> <span property="reviewBody">    {{ rv.review }}              </span>   </b></p>
-                     <p>Rating: <b> <span property="rating"> {{ rv.rating }}</span> </b></p>
 
         {% endfor %}
         </body>
